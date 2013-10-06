@@ -6,6 +6,7 @@ at the University of Richmond. This application was built as part of an independ
 study course under Professor Lewis Barnett.
 
 Setup:
+
     git clone git@github.com:nikiliu/transferur.git   # clone down the repo
     bundle install                                    # install all dependencies
     rails s                                           # fire up the server
