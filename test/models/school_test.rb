@@ -5,6 +5,12 @@ class SchoolTest < ActiveSupport::TestCase
     @school = School.new(name: "Foo", location: "Bar", international: false)
   end
 
+  test "correct schema" do
+    assert @school.respond_to? :name
+    assert @school.respond_to? :location
+    assert @school.respond_to? :international
+  end
+
   test "valid school" do
     assert @school.valid?
   end
@@ -22,5 +28,11 @@ class SchoolTest < ActiveSupport::TestCase
   test "no international" do
     @school.international = nil
     assert !@school.valid?
+  end
+
+  test "duplicate school" do
+    @school.save!
+    dup_school = @school.dup
+    assert_raises(ActiveRecord::RecordNotUnique) { dup_school.save }
   end
 end

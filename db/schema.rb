@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131006011558) do
+ActiveRecord::Schema.define(version: 20131006224551) do
 
   create_table "courses", force: true do |t|
     t.string   "name"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20131006011558) do
     t.integer  "school_id"
   end
 
+  add_index "courses", ["school_id", "name", "course_num"], name: "index_courses_on_school_id_and_name_and_course_num", unique: true
+
   create_table "schools", force: true do |t|
     t.string   "name"
     t.string   "location"
@@ -28,6 +30,8 @@ ActiveRecord::Schema.define(version: 20131006011558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "schools", ["name", "location", "international"], name: "index_schools_on_name_and_location_and_international", unique: true
 
   create_table "transfer_requests", force: true do |t|
     t.integer  "transfer_school_id"
@@ -38,5 +42,7 @@ ActiveRecord::Schema.define(version: 20131006011558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "transfer_requests", ["transfer_school_id", "transfer_course_id", "ur_course_id"], name: "unique_transfers", unique: true
 
 end

@@ -19,6 +19,14 @@ class TransferRequestTest < ActiveSupport::TestCase
     @transfer_school.destroy!
   end
 
+  test "correct schema" do
+    assert @transfer_request.respond_to? :transfer_school_id
+    assert @transfer_request.respond_to? :transfer_course_id
+    assert @transfer_request.respond_to? :ur_course_id
+    assert @transfer_request.respond_to? :approved
+    assert @transfer_request.respond_to? :reasons
+  end
+
   test "valid transfer request" do
     assert @transfer_request.valid?
   end
@@ -26,5 +34,11 @@ class TransferRequestTest < ActiveSupport::TestCase
   test "unapproved without reason" do
     @transfer_request.approved = false
     assert !@transfer_request.valid?
+  end
+
+  test "duplicate transfer request" do
+    @transfer_request.save!
+    dup_transfer = @transfer_request.dup
+    assert_raises(ActiveRecord::RecordNotUnique) { dup_transfer.save }
   end
 end
