@@ -12,4 +12,5 @@ Setup:
     bundle exec rake db:migrate                       # migrate database
     bundle exec rake test:prepare                     # prepare test database
     bundle exec rake test                             # verify all tests pass
+    bundle exec rake history:import                   # import all spreadsheet data into database
     rails s                                           # fire up the server
