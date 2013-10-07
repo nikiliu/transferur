@@ -18,12 +18,15 @@ $color-spider-red:    #8e2618;
 // General
 //------------------------------------------------------------------------
 body {
-  background: darken(white, 5%);
+  background-image: image-url("ur_shield.png");
+  background-position: center 25px;
+  background-repeat: no-repeat;
+  background-color: darken(white, 5%);
   line-height: $line-height;
   font-family: $font-family-primary;
   font-weight: 300;
   font-size: $font-size-base;
-  margin: 50px 50px 150px 50px;
+  margin: 100px 50px 150px 50px;
 }
 .wrapper {
   @include border-radius(3px);
