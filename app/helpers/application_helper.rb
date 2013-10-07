@@ -2,7 +2,7 @@ module ApplicationHelper
   def full_title(title)
     default = "TransferUR"
 
-    if title.empty?
+    if title.nil?
       return default
     end
 
