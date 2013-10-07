@@ -8,6 +8,7 @@ study course under Professor Lewis Barnett.
 Setup:
 
     git clone git@github.com:nikiliu/transferur.git   # clone down the repo
+    cd transferur                                     # cd into the directory
     bundle install                                    # install all dependencies
     bundle exec rake db:migrate                       # migrate database
     bundle exec rake test:prepare                     # prepare test database
