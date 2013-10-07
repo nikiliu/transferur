@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131006224551) do
+ActiveRecord::Schema.define(version: 20131007012741) do
 
   create_table "courses", force: true do |t|
     t.string   "name"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20131006224551) do
   end
 
   add_index "courses", ["school_id", "name", "course_num"], name: "index_courses_on_school_id_and_name_and_course_num", unique: true
+
+  create_table "pending_requests", force: true do |t|
+    t.string   "transfer_school_name"
+    t.string   "transfer_school_location"
+    t.boolean  "transfer_school_international"
+    t.string   "transfer_course_name"
+    t.string   "transfer_course_num"
+    t.integer  "ur_course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "schools", force: true do |t|
     t.string   "name"
