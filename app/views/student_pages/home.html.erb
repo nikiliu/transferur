@@ -1,0 +1,43 @@
+<div class="wrapper">
+  <h1 class="title">Math Course Transfer Request Form</h1>
+
+  <div class="main">
+    <ul class="notices">
+      <li>This form is for current UR students wishing to transfer in a single course.</li>
+      <li>
+        This form is for departmental approval only. If this course is approved, you must
+        still complete all steps listed in the
+        <%= link_to "transfer approval process", "http://math.richmond.edu/program/transfer.html" %>.
+      </li>
+    </ul><!-- .notices -->
+
+    <%= form_tag new_transfer_request_path, method: :post do %>
+
+      <div class="separator"><span>1</span> A little about you</div>
+      <div>
+        <%= label_tag :name %>
+        <%= text_field_tag :name, params[:name] %>
+      </div>
+      <div>
+        <%= label_tag :email %>
+        <%= email_field_tag :email, params[:email] %>
+      </div>
+
+      <div class="separator"><span>2</span> Transfer school &amp; course</div>
+      <div>
+        <%= label_tag :transfer_school %>
+        <%= select_tag :transfer_school, options_from_collection_for_select(@transfer_schools, :id, :name) %>
+      </div>
+
+      <div class="separator"><span>3</span> UR course</div>
+        <%= label_tag :ur_course_num %>
+        <%= select_tag :ur_course_num, options_from_collection_for_select(@ur_courses, :id, :name) %>
+      <div>
+
+      </div>
+
+      <%= submit_tag "Submit" %>
+
+    <% end %>
+  </div><!-- .main -->
+</div><!-- .wrapper -->

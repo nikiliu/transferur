@@ -1,0 +1,133 @@
+// Place all the styles related to the StudentPages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "compass";
+@import "compass/reset";
+@import url("http://fonts.googleapis.com/css?family=Lato:300,400,700");
+
+// Config
+//------------------------------------------------------------------------
+$font-family-primary: "Lato", Helvetica, Arial, sans-serif;
+$font-size-base:      10px;
+$line-height:         1.4;
+$color-lake-blue:     lighten(#122c46, 10%);
+$color-leaf-green:    darken(#bdd570, 10%);
+$color-spider-red:    #8e2618;
+
+// General
+//------------------------------------------------------------------------
+body {
+  background: darken(white, 5%);
+  line-height: $line-height;
+  font-family: $font-family-primary;
+  font-weight: 300;
+  font-size: $font-size-base;
+  margin: 50px 50px 150px 50px;
+}
+.wrapper {
+  @include border-radius(3px);
+  @include box-shadow(0 0 5px darken(white, 15%));
+  background: white;
+  width: 700px;
+  margin: 0 auto;
+}
+
+// Fold Elements
+//------------------------------------------------------------------------
+.title {
+  @include border-radius(3px);
+  background: $color-lake-blue;
+  text-align: center;
+  font-weight: 300;
+  font-size: 3.3em;
+  color: lighten($color-lake-blue, 55%);
+  position: relative;
+  z-index: 5;
+  padding: 25px;
+}
+.main {
+  font-size: 1.6em;
+  padding: 50px;
+}
+.notices {
+  @include border-radius(3px);
+  background: darken(white, 2%);
+  list-style: square;
+  color: darken(white, 45%);
+  padding: 25px 25px 25px 50px;
+  border: 1px solid darken(white, 7%);
+}
+
+// Form Elements
+//------------------------------------------------------------------------
+form {
+  margin-top: 25px;
+
+  .separator {
+    font-size: 1.4em;
+    color: darken(white, 45%);
+    position: relative;
+    left: -75px;
+    margin-top: 50px;
+
+    span {
+      @include border-radius(9999px);
+      @include inline-block;
+      background: $color-spider-red;
+      line-height: 1.8;
+      text-align: center;
+      font-size: 1.2em;
+      color: white;
+      width: 50px;
+      height: 50px;
+      margin-right: 25px;
+    }
+  }
+  div {
+    margin: 7px 0;
+  }
+  label {
+    @include inline-block;
+    text-align: right;
+    min-width: 125px;
+    padding-right: 15px;
+  }
+  input {
+    @include transition(0.2s ease-in-out);
+    @include border-radius(3px);
+    @include box-shadow(0 0 3px lighten(black, 45%));
+    background: white;
+    font-family: inherit;
+    font-size: inherit;
+    min-width: 200px;
+    padding: 5px;
+    border: none;
+
+    &:focus {
+      @include box-shadow(0 0 6px lighten($color-lake-blue, 15%));
+      outline: none;
+    }
+  }
+  select {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  option {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  input[type="submit"] {
+    @include box-shadow(0 0 0 transparent);
+    background: $color-leaf-green;
+    color: white;
+    display: block;
+    margin: 50px auto 0 auto;
+    padding: 15px;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($color-leaf-green, 10%);
+    }
+  }
+}
