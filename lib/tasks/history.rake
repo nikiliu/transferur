@@ -37,6 +37,7 @@ namespace :history do
       if transfer_school_hash[:location].nil? or
          transfer_course_hash[:course_num].empty? or
          ur_course_hash[:course_num].empty? or
+         ur_course_hash[:course_num] == "0" or
          (!approved and reasons.nil?)
         next
       end
