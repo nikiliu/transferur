@@ -12,7 +12,12 @@
 </head>
 <body>
 
-<%= yield %>
+<div class="wrapper">
+  <h1 class="title">Math Course Transfer Request Form</h1>
+  <div class="main">
+    <%= yield %>
+  </div><!-- .main -->
+</div><!-- .wrapper -->
 
 <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 </body>

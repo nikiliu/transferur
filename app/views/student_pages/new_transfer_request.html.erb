@@ -1,0 +1,10 @@
+<% if not @pending %>
+  <% if @approved %>
+    <p>This transfer request is approved!</p>
+  <% else %>
+    <p>This transfer request is not permitted for the following reasons:</p>
+    <p><%= @reasons %></p>
+  <% end %>
+<% else %>
+  <p>A pending transfer request has been sent.</p>
+<% end %>
