@@ -28,10 +28,11 @@
         <%= label_tag :transfer_school %>
         <%= select_tag :transfer_school, options_from_collection_for_select(@transfer_schools, :id, :name) %>
       </div>
+      <div class="transfer-course"></div>
 
       <div class="separator"><span>3</span> UR course</div>
-        <%= label_tag :ur_course_num %>
-        <%= select_tag :ur_course_num, options_from_collection_for_select(@ur_courses, :id, :name) %>
+        <%= label_tag :course_number %>
+        <%= select_tag :course_number, options_from_collection_for_select(@ur_courses, :id, :name) %>
       <div>
 
       </div>
