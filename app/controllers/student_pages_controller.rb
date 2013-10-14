@@ -20,6 +20,8 @@ class StudentPagesController < ApplicationController
     student_email      = params[:email]
     transfer_school_id = params[:transfer_school]
     transfer_course_id = params[:transfer_course]
+    transfer_online    = params[:online]
+    transfer_dual      = params[:dual_enrollment]
     ur_course_id       = params[:course_number]
 
     # Search database for an existing transfer request based on form data
@@ -29,12 +31,15 @@ class StudentPagesController < ApplicationController
 
     # Display output corresponding to whether the transfer request is approved,
     # not approved, or pending.
-    if query != nil
+    @pending = true
+    if transfer_online
+      @pending  = false
+      @approved = false
+      @reasons  = "Online courses not accepted"
+    elsif query != nil and query.updated_at >= 5.years.ago and not transfer_dual
       @pending  = false
       @approved = query.approved
       @reasons  = query.reasons
-    else
-      @pending = true
     end
   end
 end

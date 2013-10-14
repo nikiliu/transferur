@@ -1,2 +1,12 @@
-<%= label_tag :transfer_course %>
-<%= select_tag :transfer_course, options_from_collection_for_select(@transfer_courses, :id, :full_name) %>
+<div>
+  <%= label_tag :transfer_course %>
+  <%= select_tag :transfer_course, options_from_collection_for_select(@transfer_courses, :id, :full_name) %>
+</div>
+<div>
+  <%= label_tag :online %>
+  <%= check_box_tag :online %>
+</div>
+<div>
+  <%= label_tag :dual_enrollment %>
+  <%= check_box_tag :dual_enrollment %>
+</div>
