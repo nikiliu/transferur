@@ -14,5 +14,6 @@ update_transfer_courses = (school_id) ->
       $(".transfer-course").html(data)
 
 # Fires ajax function when a transfer school is selected
-$("#transfer_school").change () ->
+$("#transfer_school").change(() ->
   update_transfer_courses($(this).val())
+).change()
