@@ -21,7 +21,6 @@ Pull Update:
 
     git pull                                          # pull latest commits
     bundle exec rake db:reset                         # reset database
-    bundle exec rake db:migrate                       # migrate database
     bundle exec rake test:prepare                     # prepare test database
     bundle exec rake history:import                   # import all spreadsheet data into database
     bundle exec rake history:admin                    # set up admin account
