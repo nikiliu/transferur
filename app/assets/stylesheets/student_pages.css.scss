@@ -14,6 +14,7 @@ $line-height:         1.4;
 $color-lake-blue:     lighten(#122c46, 10%);
 $color-leaf-green:    darken(#bdd570, 10%);
 $color-spider-red:    #8e2618;
+$color-spirit-gold:   darken(#f0eb86, 35%);
 
 // General
 //------------------------------------------------------------------------
@@ -34,6 +35,28 @@ body {
   background: white;
   width: 700px;
   margin: 0 auto;
+}
+
+// Flash Messages
+//------------------------------------------------------------------------
+.flash {
+  @include border-radius(3px);
+  color: white;
+  margin-bottom: 25px;
+  padding: 25px;
+
+  &.success {
+    background: $color-leaf-green;
+    border: 1px solid darken($color-leaf-green, 5%);
+  }
+  &.pending {
+    background: $color-spirit-gold;
+    border: 1px solid darken($color-spirit-gold, 5%);
+  }
+  &.error {
+    background: $color-spider-red;
+    border: 1px solid darken($color-spider-red, 5%);
+  }
 }
 
 // Fold Elements

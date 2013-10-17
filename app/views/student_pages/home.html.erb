@@ -1,3 +1,7 @@
+<% flash.each do |type, message| %>
+  <div class="flash <%= type %>"><%= message %></div>
+<% end %>
+
 <ul class="notices">
   <li>This form is for current UR students wishing to transfer in a single course.</li>
   <li>
