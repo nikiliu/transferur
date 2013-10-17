@@ -1,10 +1,12 @@
 Hello <%= @name %>. You have recently submitted a UR Math Course Transfer Request:
 
+==================================================================================
 Transfer school: <%= @transfer_school %>
 Transfer course: <%= @transfer_course_name %> (<%= @transfer_course_num %>)
 Dual enrollment: <%= @dual_enrollment %>
 Online:          <%= @online %>
-UR course:       <%= @ur_course_num %>
+UR course:       <%= @ur_course_name %> (<%= @ur_course_num %>)
+==================================================================================
 
 <% if @approved %>
 This request has been approved. Please complete the steps listed in

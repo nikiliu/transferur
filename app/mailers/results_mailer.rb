@@ -9,6 +9,7 @@ class ResultsMailer < ActionMailer::Base
     @transfer_course_num  = data[:transfer_course_num]
     @dual_enrollment      = data[:dual_enrollment]
     @online               = data[:online]
+    @ur_course_name       = data[:ur_course_name]
     @ur_course_num        = data[:ur_course_num]
     @approved             = data[:approved]
     @reasons              = data[:reasons]

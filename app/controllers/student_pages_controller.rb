@@ -49,6 +49,7 @@ class StudentPagesController < ApplicationController
       transfer_course_num:  School.find_by(id: transfer_school_id).courses.find_by(id: transfer_course_id).course_num,
       dual_enrollment:      transfer_dual,
       online:               transfer_online,
+      ur_course_name:       School.first.courses.find_by(id: ur_course_id).name,
       ur_course_num:        School.first.courses.find_by(id: ur_course_id).course_num,
     }
 
