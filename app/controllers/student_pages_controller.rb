@@ -41,31 +41,38 @@ class StudentPagesController < ApplicationController
                                     ur_course_id:       ur_course_id)
 
     # Set up email parameters hash
-    email_data = {
+    transfer_school = School.find_by(id: transfer_school_id)
+    transfer_course = transfer_school.courses.find_by(id: transfer_course_id)
+    ur_course       = School.first.courses.find_by(id: ur_course_id)
+    email_data      = {
       name:                 student_name,
       email:                student_email,
-      transfer_school:      School.find_by(id: transfer_school_id).name,
-      transfer_course_name: School.find_by(id: transfer_school_id).courses.find_by(id: transfer_course_id).name,
-      transfer_course_num:  School.find_by(id: transfer_school_id).courses.find_by(id: transfer_course_id).course_num,
+      transfer_school:      transfer_school.name,
+      transfer_course_name: transfer_course.name,
+      transfer_course_num:  transfer_course.course_num,
       dual_enrollment:      transfer_dual,
       online:               transfer_online,
-      ur_course_name:       School.first.courses.find_by(id: ur_course_id).name,
-      ur_course_num:        School.first.courses.find_by(id: ur_course_id).course_num,
+      ur_course_name:       ur_course.name,
+      ur_course_num:        ur_course.course_num,
     }
 
-    # Handle cases for submitted form data
+    # Handle cases for submitted form data. First case: online courses.
     if transfer_online
-      flash[:success] = "Your transfer request for an online course was successfully submitted. " +
-                        "Please check your email to see if your request was approved."
+      flash[:success]       = "Your transfer request for an online course was successfully submitted. " +
+                              "Please check your email to see if your request was approved."
       email_data[:approved] = false
       email_data[:reasons]  = "Online courses not accepted."
       ResultsMailer.result_email(email_data).deliver
+
+    # TransferRequest reviewed within 5 years exists
     elsif query != nil and query.updated_at >= 5.years.ago and not transfer_dual
-      flash[:success] = "Your transfer request was successfully submitted. Please check " +
-                        "your email to see if your request was approved."
+      flash[:success]       = "Your transfer request was successfully submitted. Please check " +
+                              "your email to see if your request was approved."
       email_data[:approved] = query.approved
       email_data[:reasons]  = query.reasons
       ResultsMailer.result_email(email_data).deliver
+
+    # Transfer course is dual enrollment, or corresponding TransferRequest does not exist
     else
       flash[:pending] = "Your transfer request is currently pending. An email notification " +
                         "will be sent once your request is approved or not approved."
