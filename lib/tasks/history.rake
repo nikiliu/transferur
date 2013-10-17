@@ -48,6 +48,12 @@ namespace :history do
     "406" => "Summer Undergraduate Research"
   }
 
+  # Set up admin account for the application
+  task admin: :environment do
+    puts User.create!(email: "lcaudill@richmond.edu",
+                      password: "password", password_confirmation: "password")
+  end
+
   # Import all data from the Excel spreadsheet into the database
   task import: :environment do
 

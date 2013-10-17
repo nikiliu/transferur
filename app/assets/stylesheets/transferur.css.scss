@@ -1,6 +1,6 @@
-// Place all the styles related to the StudentPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+//========================================================================
+// transferur.css.scss
+//========================================================================
 
 @import "compass";
 @import "compass/reset";
@@ -45,7 +45,7 @@ body {
   margin-bottom: 25px;
   padding: 25px;
 
-  &.success {
+  &.success, &.notice {
     background: $color-leaf-green;
     border: 1px solid darken($color-leaf-green, 5%);
   }
@@ -53,9 +53,36 @@ body {
     background: $color-spirit-gold;
     border: 1px solid darken($color-spirit-gold, 5%);
   }
-  &.error {
+  &.error, &.alert {
     background: $color-spider-red;
     border: 1px solid darken($color-spider-red, 5%);
+  }
+}
+
+// Admin Nav
+//------------------------------------------------------------------------
+.admin-nav {
+  background: lighten($color-lake-blue, 10%);
+  font-size: 0;
+  margin-top: -3px;
+
+  ul {
+    text-align: center;
+  }
+  li {
+    @include inline-block;
+  }
+  a {
+    @include transition(0.1s ease-in-out);
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
+    display: block;
+    padding: 12px 15px;
+
+    &:hover {
+      background: lighten($color-lake-blue, 5%);
+    }
   }
 }
 
@@ -83,6 +110,29 @@ body {
   color: darken(white, 45%);
   padding: 25px 25px 25px 50px;
   border: 1px solid darken(white, 7%);
+}
+
+// Devise Errors
+//------------------------------------------------------------------------
+#error_explanation {
+  @extend .notices;
+  background: $color-spider-red;
+  color: white;
+  border: 1px solid darken($color-spider-red, 5%);
+
+  ul {
+    list-style: square;
+  }
+}
+.field_with_errors {
+  display: inline;
+
+  label {
+    color: $color-spider-red;
+  }
+  input {
+    @include box-shadow(0 0 3px $color-spider-red);
+  }
 }
 
 // Form Elements

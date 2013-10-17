@@ -1,0 +1,24 @@
+<%= render "shared/flash_messages" %>
+
+<ul class="notices">
+  <li><%= link_to "Return to form", root_path %></li>
+</ul><!-- .notices -->
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <div class="separator"><span>+</span> Login</div>
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email, :autofocus => true %>
+  </div>
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <% if devise_mapping.rememberable? -%>
+    <div>
+      <%= f.label :remember_me %>
+      <%= f.check_box :remember_me %>
+    </div>
+  <% end -%>
+  <%= f.submit "Sign in" %>
+<% end %>

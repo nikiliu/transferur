@@ -1,6 +1,4 @@
-<% flash.each do |type, message| %>
-  <div class="flash <%= type %>"><%= message %></div>
-<% end %>
+<%= render "shared/flash_messages" %>
 
 <ul class="notices">
   <li>This form is for current UR students wishing to transfer in a single course.</li>
@@ -16,7 +14,7 @@
   <div class="separator"><span>1</span> A little about you</div>
   <div>
     <%= label_tag :name %>
-    <%= text_field_tag :name, params[:name] %>
+    <%= text_field_tag :name, params[:name], autofocus: true %>
   </div>
   <div>
     <%= label_tag :email %>
