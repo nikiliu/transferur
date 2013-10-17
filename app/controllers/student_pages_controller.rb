@@ -8,7 +8,7 @@ class StudentPagesController < ApplicationController
 
   # Returns a label and select corresponding to the given school_id
   def update_transfer_courses
-    @transfer_courses = School.find_by(id: params[:school_id]).courses.all
+    @transfer_courses = School.find_by(id: params[:school_id]).courses
     render partial: "transfer_courses"
   end
 
@@ -26,7 +26,7 @@ class StudentPagesController < ApplicationController
 
     # Validate name and email fields
     if student_name.empty?
-      flash[:error] = "Please enter a name."
+      flash[:error] = "Please enter your name."
       redirect_to root_path
       return
     elsif student_email.empty? or not student_email =~ /@/
@@ -40,13 +40,31 @@ class StudentPagesController < ApplicationController
                                     transfer_course_id: transfer_course_id,
                                     ur_course_id:       ur_course_id)
 
+    # Set up email parameters hash
+    email_data = {
+      name:                 student_name,
+      email:                student_email,
+      transfer_school:      School.find_by(id: transfer_school_id).name,
+      transfer_course_name: School.find_by(id: transfer_school_id).courses.find_by(id: transfer_course_id).name,
+      transfer_course_num:  School.find_by(id: transfer_school_id).courses.find_by(id: transfer_course_id).course_num,
+      dual_enrollment:      transfer_dual,
+      online:               transfer_online,
+      ur_course_num:        School.first.courses.find_by(id: ur_course_id).course_num,
+    }
+
     # Handle cases for submitted form data
-    if query != nil and query.updated_at >= 5.years.ago and not transfer_dual
-      flash[:success] = "Your transfer request was successfully submitted. Please check " +
-                        "your email to see if your request was approved."
-    elsif transfer_online
+    if transfer_online
       flash[:success] = "Your transfer request for an online course was successfully submitted. " +
                         "Please check your email to see if your request was approved."
+      email_data[:approved] = false
+      email_data[:reasons]  = "Online courses not accepted."
+      ResultsMailer.result_email(email_data).deliver
+    elsif query != nil and query.updated_at >= 5.years.ago and not transfer_dual
+      flash[:success] = "Your transfer request was successfully submitted. Please check " +
+                        "your email to see if your request was approved."
+      email_data[:approved] = query.approved
+      email_data[:reasons]  = query.reasons
+      ResultsMailer.result_email(email_data).deliver
     else
       flash[:pending] = "Your transfer request is currently pending. An email notification " +
                         "will be sent once your request is approved or not approved."

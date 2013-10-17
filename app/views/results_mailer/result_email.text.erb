@@ -1,0 +1,18 @@
+Hello <%= @name %>. You have recently submitted a UR Math Course Transfer Request:
+
+Transfer school: <%= @transfer_school %>
+Transfer course: <%= @transfer_course_name %> (<%= @transfer_course_num %>)
+Dual enrollment: <%= @dual_enrollment %>
+Online:          <%= @online %>
+UR course:       <%= @ur_course_num %>
+
+<% if @approved %>
+This request has been approved. Please complete the steps listed in
+http://math.richmond.edu/program/transfer.html to complete your transfer process.
+<% else %>
+This request cannot be approved for the following reasons:
+
+  <%= @reasons %>
+<% end %>
+
+If you have any questions, please email lcaudill@richmond.edu.
