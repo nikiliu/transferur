@@ -14,6 +14,39 @@ namespace :history do
   ACCEPTABLE_COL     = 9
   REASONS_COL        = 10
   LAST_EVAL_DATE_COL = 5
+  COURSES            = {
+    "102" => "Problem Solving Using Finite Mathematics",
+    "119" => "Statistics for Social and Life Sciences",
+    "190" => "Integrated Science/Math/Computer Science 2 with Laboratory",
+    "195" => "Special Topics",
+    "211" => "Calculus I",
+    "212" => "Calculus II",
+    "219" => "Introduction to the Design of Experiments",
+    "232" => "Scientific Calculus II",
+    "235" => "Multivariate Calculus",
+    "245" => "Linear Algebra",
+    "300" => "Fundamentals of Abstract Mathematics",
+    "304" => "Mathematical Models in Biology and Medicine",
+    "306" => "Abstract Algebra I",
+    "307" => "Abstract Algebra II",
+    "309" => "Financial Mathematics: The Theory of Interest and Investment",
+    "310" => "Advanced Multivariable Calculus",
+    "312" => "Differential Equations",
+    "315" => "Modern Geometry",
+    "320" => "Real Analysis I",
+    "321" => "Real Analysis II",
+    "323" => "Discrete Mathematical Models",
+    "328" => "Numerical Analysis",
+    "329" => "Probability",
+    "330" => "Mathematical Statistics",
+    "331" => "Comlplex Analysis",
+    "336" => "Operations Research",
+    "340" => "Directed Independent Study",
+    "350" => "Coding Theory and Cryptography: The Mathematics of Communication",
+    "395" => "Special Topics",
+    "396" => "Selected Topics in Mathematics",
+    "406" => "Summer Undergraduate Research"
+  }
 
   # Import all data from the Excel spreadsheet into the database
   task import: :environment do
@@ -36,8 +69,7 @@ namespace :history do
       # Skip if there is no location, reason for rejection, or no course number
       if transfer_school_hash[:location].nil? or
          transfer_course_hash[:course_num].empty? or
-         ur_course_hash[:course_num].empty? or
-         ur_course_hash[:course_num] == "0" or
+         ur_course_hash[:name].nil? or
          (!approved and reasons.nil?)
         next
       end
@@ -97,9 +129,17 @@ namespace :history do
 
   # Return a hash of the U of R course information in the passed row
   def parse_ur_course_info(history, i)
-    {
-      name:          history.cell(i, UR_COURSE_NUM_COL).to_i.to_s,
-      course_num:    history.cell(i, UR_COURSE_NUM_COL).to_i.to_s
+    parsed_num  = history.cell(i, UR_COURSE_NUM_COL).to_i.to_s
+    course_num  = "MATH #{parsed_num}"
+    course_name = nil
+
+    if COURSES[parsed_num]
+      course_name = COURSES[parsed_num]
+    end
+
+    return {
+      name:       course_name,
+      course_num: course_num
     }
   end
 

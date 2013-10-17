@@ -33,7 +33,7 @@
   <div class="separator"><span>3</span> UR course</div>
   <div>
     <%= label_tag :course_number %>
-    <%= select_tag :course_number, options_from_collection_for_select(@ur_courses, :id, :name) %>
+    <%= select_tag :course_number, options_from_collection_for_select(@ur_courses, :id, :full_name) %>
   </div>
 
   <%= submit_tag "Submit" %>
