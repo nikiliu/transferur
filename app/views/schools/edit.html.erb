@@ -1,0 +1,19 @@
+<%= render "error_messages" %>
+<%= render "notices" %>
+
+<%= form_for @school, url: school_path(@school) do |f| %>
+  <div class="separator"><span>+</span> Edit School</div>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :location %>
+    <%= f.text_field :location %>
+  </div>
+  <div>
+    <%= f.label :international %>
+    <%= f.check_box :international %>
+  </div>
+  <%= f.submit %>
+<% end %>

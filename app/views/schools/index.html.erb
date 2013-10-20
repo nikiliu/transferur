@@ -1,0 +1,18 @@
+<div class="notices">
+  <li><%= link_to "New School", new_school_path %></li>
+</div><!-- .notices -->
+
+<ul class="schools">
+<% @schools.each do |school| %>
+  <li>
+    <%= link_to school.name, edit_school_path(school.id) %>
+    <span>
+      <%= link_to "Delete",
+        school_path(school.id),
+        method: :delete,
+        confirm: "Are you sure you want to delete this school?"
+      %>
+    </span>
+  </li>
+<% end %>
+</ul><!-- .schools -->

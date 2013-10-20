@@ -57,6 +57,10 @@ body {
     background: $color-spider-red;
     border: 1px solid darken($color-spider-red, 5%);
   }
+  ul {
+    list-style: square;
+    padding-left: 25px;
+  }
 }
 
 // Admin Nav
@@ -132,6 +136,59 @@ body {
   }
   input {
     @include box-shadow(0 0 3px $color-spider-red);
+  }
+}
+
+// Schools
+//------------------------------------------------------------------------
+.schools {
+  margin-top: 25px;
+
+  li {
+    @include clearfix;
+
+    &:nth-child(2n) {
+      background: darken(white, 2%);
+    }
+    &:hover {
+      a {
+        background: darken(white, 10%);
+      }
+      span {
+        display: block;
+
+        a {
+          @include transition(0.1s ease-in-out);
+          background: lighten($color-spider-red, 15%);
+          color: white;
+
+          &:hover {
+            background: lighten($color-spider-red, 5%);
+          }
+        }
+      }
+    }
+  }
+  a {
+    @include box-sizing(border-box);
+    text-decoration: none;
+    color: $color-lake-blue;
+    float: left;
+    display: block;
+    width: 85%;
+    padding: 10px 15px;
+  }
+  span {
+    float: right;
+    display: none;
+    width: 15%;
+
+    a {
+      text-align: center;
+      float: none;
+      width: auto;
+      padding: 10px;
+    }
   }
 }
 

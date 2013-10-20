@@ -1,9 +1,14 @@
 Transferur::Application.routes.draw do
   root "student_pages#home"
 
+  # Request form
   match "/update_transfer_courses", to: "student_pages#update_transfer_courses", via: "get"
   match "/new_transfer_request",    to: "student_pages#new_transfer_request",    via: "post"
 
+  # Schools admin
+  resources :schools, path: "admin/schools/", only: [:index, :create, :new, :edit, :update, :destroy]
+
+  # Devise
   devise_for :users, path: "",
                      path_names: { sign_in: "login", sign_out: "logout" },
                      skip: :registrations
