@@ -46,10 +46,6 @@ class TransferRequestsController < ApplicationController
 
   private
 
-    def new_transfer_request_path(transfer_school_id, transfer_course_id)
-      "/admin/transfer_requests/new?transfer_school_id=#{transfer_school_id}&transfer_course_id=#{transfer_course_id}"
-    end
-
     def protected_params
       params.require(:transfer_request).permit(:transfer_school_id,
                                                :transfer_course_id,

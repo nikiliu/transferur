@@ -1,7 +1,11 @@
 <%= render "error_messages" %>
 <ul class="notices">
-  <li><%= link_to "Back to #{@transfer_course.name}",
-                  edit_course_path(@transfer_school, @transfer_course) %></li>
+  <li>
+    <%= link_to "Schools & Courses", schools_path %> >
+    <%= link_to @transfer_school.name, edit_school_path(@transfer_school) %> >
+    <%= link_to @transfer_course.name, edit_course_path(@transfer_school, @transfer_course) %> >
+    New Transfer Request
+  </li>
 </ul><!-- .notices -->
 
 <%= form_for @request, url: transfer_request_path(@request) do |f| %>

@@ -1,3 +1,10 @@
 <ul class="notices">
-  <li><%= link_to "Back to schools", schools_path %></li>
+  <li>
+    <%= link_to "Schools & Courses", schools_path %> >
+    <% if @school.name %>
+      <%= link_to @school.name, edit_school_path(@school) %>
+    <% else %>
+      New School
+    <% end %>
+  </li>
 </ul><!-- .notices -->
