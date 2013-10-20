@@ -8,4 +8,9 @@ class Course < ActiveRecord::Base
   def full_name
     "#{name} (#{course_num})"
   end
+
+  # Returns all transfer requests with this course
+  def transfer_requests
+    TransferRequest.where(transfer_school_id: school_id, transfer_course_id: id)
+  end
 end

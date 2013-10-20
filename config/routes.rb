@@ -10,6 +10,8 @@ Transferur::Application.routes.draw do
                       only: [:index, :new, :create, :edit, :update, :destroy]
   resources :courses, path: "admin/schools/:school_id/courses/",
                       only: [:new, :create, :edit, :update, :destroy]
+  resources :transfer_requests, path: "admin/transfer_requests/",
+                      only: [:new, :create, :edit, :update, :destroy]
 
   # Devise
   devise_for :users, path: "",

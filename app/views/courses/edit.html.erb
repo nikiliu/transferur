@@ -12,4 +12,28 @@
     <%= f.text_field :course_num %>
   </div>
   <%= f.submit %>
+
+  <div class="separator"><span>+</span> Edit Transfer Requests</div>
+  <ul class="notices">
+    <li><%= link_to "New transfer request",
+                    "/admin/transfer_requests/new?transfer_school_id=#{@school.id}&transfer_course_id=#{@course.id}" %></li>
+  </ul><!-- .notices -->
+  <% if @course.transfer_requests.any? %>
+  <ul class="transfer-requests">
+    <% @course.transfer_requests.each do |request| %>
+    <li>
+      <% ur_course = School.first.courses.find_by(id: request.ur_course_id) %>
+      <%= link_to "Transfer to #{ur_course.full_name}", edit_transfer_request_path(request) %>
+      <span>
+        <%=
+          link_to "Delete",
+          transfer_request_path(request),
+          method: :delete,
+          data: { confirm: "Are you sure you want to delete this transfer request?" }
+        %>
+      </span>
+    </li>
+    <% end %>
+  </ul><!-- .transfer-requests -->
+  <% end %>
 <% end %>

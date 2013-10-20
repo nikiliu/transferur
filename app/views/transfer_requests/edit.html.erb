@@ -1,0 +1,15 @@
+<%= render "error_messages" %>
+<%= render "notices" %>
+
+<%= form_for @request, url: transfer_request_path(@request) do |f| %>
+  <div class="separator"><span>+</span> Edit Transfer Request</div>
+  <div>
+    <%= f.label :approved %>
+    <%= f.check_box :approved %>
+  </div>
+  <div>
+    <%= f.label :reasons %>
+    <%= f.text_field :reasons %>
+  </div>
+  <%= f.submit %>
+<% end %>

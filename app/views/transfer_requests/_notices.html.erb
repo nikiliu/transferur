@@ -1,0 +1,9 @@
+<ul class="notices">
+  <li>
+    You are editing the transfer request from "<%= @request.transfer_course.name %>" at
+    <%= @request.transfer_school.name %> to "<%= @request.ur_course.name %>" at the University
+    of Richmond.
+  </li>
+  <li><%= link_to "Back to #{@request.transfer_course.name}",
+                  edit_course_path(@request.transfer_school, @request.transfer_course) %></li>
+</ul><!-- .notices -->
