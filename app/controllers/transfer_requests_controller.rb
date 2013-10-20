@@ -2,6 +2,7 @@ class TransferRequestsController < ApplicationController
   before_filter :authenticate_user!
 
   def new
+    @title           = "New Transfer Request"
     @request         = TransferRequest.new
     @ur_courses      = School.first.courses
     @transfer_school = School.find_by(id: params[:transfer_school_id])
@@ -22,10 +23,12 @@ class TransferRequestsController < ApplicationController
   end
 
   def edit
+    @title   = "Edit Transfer Request"
     @request = TransferRequest.find_by(id: params[:id])
   end
 
   def update
+    @title   = "Edit Transfer Request"
     @request = TransferRequest.find_by(id: params[:id])
     if @request.update_attributes(protected_params)
       flash[:success] = "Transfer request successfully updated."

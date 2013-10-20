@@ -2,11 +2,13 @@ class CoursesController < ApplicationController
   before_filter :authenticate_user!
 
   def new
+    @title  = "New Course"
     @school = School.find_by(id: params[:school_id])
     @course = @school.courses.new
   end
 
   def create
+    @title  = "New Course"
     @school = School.find_by(id: params[:school_id])
     @course = @school.courses.new(protected_params)
     if @course.save
@@ -18,11 +20,13 @@ class CoursesController < ApplicationController
   end
 
   def edit
+    @title  = "Edit Course"
     @school = School.find_by(id: params[:school_id])
     @course = @school.courses.find_by(id: params[:id])
   end
 
   def update
+    @title  = "Edit Course"
     @school = School.find_by(id: params[:school_id])
     @course = @school.courses.find_by(id: params[:id])
     if @course.update_attributes(protected_params)
