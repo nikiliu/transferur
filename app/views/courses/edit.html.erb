@@ -1,0 +1,15 @@
+<%= render "error_messages" %>
+<%= render "notices" %>
+
+<%= form_for @course, url: course_path(@school.id, @course.id) do |f| %>
+  <div class="separator"><span>+</span> Edit Course</div>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :course_num %>
+    <%= f.text_field :course_num %>
+  </div>
+  <%= f.submit %>
+<% end %>

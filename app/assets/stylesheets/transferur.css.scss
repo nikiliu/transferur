@@ -139,9 +139,9 @@ body {
   }
 }
 
-// Schools
+// Schools & Courses
 //------------------------------------------------------------------------
-.schools {
+.schools, .courses {
   margin-top: 25px;
 
   li {
@@ -151,9 +151,8 @@ body {
       background: darken(white, 2%);
     }
     &:hover {
-      a {
-        background: darken(white, 10%);
-      }
+      background: darken(white, 10%);
+
       span {
         display: block;
 

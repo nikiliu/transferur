@@ -16,4 +16,26 @@
     <%= f.check_box :international %>
   </div>
   <%= f.submit %>
+
+  <div class="separator"><span>+</span> Edit Courses</div>
+  <ul class="notices">
+    <li><%= link_to "New course", new_course_path(@school) %></li>
+  </ul><!-- .notices -->
+  <% if @school.courses.any? %>
+  <ul class="courses">
+    <% @school.courses.order(:name).each do |course| %>
+    <li>
+      <%= link_to course.full_name, edit_course_path(@school, course) %>
+      <span>
+        <%=
+          link_to "Delete",
+          course_path(@school, course),
+          method: :delete,
+          confirm: "Are you sure you want to delete this course?"
+        %>
+      </span>
+    </li>
+    <% end %>
+  </ul><!-- .courses -->
+  <% end %>
 <% end %>
