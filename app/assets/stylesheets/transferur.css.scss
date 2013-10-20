@@ -218,6 +218,10 @@ form {
   }
   div {
     margin: 7px 0;
+
+    &.other-school, &.other-course {
+      display: none;
+    }
   }
   label {
     @include inline-block;

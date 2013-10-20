@@ -20,9 +20,27 @@
   </div>
 
   <div class="separator"><span>2</span> Transfer school &amp; course</div>
-  <div>
+  <div class="transfer-school">
     <%= label_tag :transfer_school %>
     <%= select_tag :transfer_school, options_from_collection_for_select(@transfer_schools, :id, :name) %>
+  </div><!-- .transfer-school -->
+  <div class="other-school">
+    <div>
+      <%= label_tag :other_school, "Transfer school" %>
+      <%= text_field_tag :other_school %>
+    </div>
+    <div>
+      <%= label_tag :other_school_location, "Location" %>
+      <%= text_field_tag :other_school_location %>
+    </div>
+    <div>
+      <%= label_tag :international %>
+      <%= check_box_tag :international %>
+    </div>
+  </div><!-- .other-school -->
+  <div>
+    <%= label_tag :other_school_check, "Other school" %>
+    <%= check_box_tag :other_school_check %>
   </div>
   <div class="transfer-course"></div>
 

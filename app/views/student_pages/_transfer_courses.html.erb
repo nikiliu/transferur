@@ -1,6 +1,24 @@
-<div>
+<div class="transfer-course-select">
   <%= label_tag :transfer_course %>
   <%= select_tag :transfer_course, options_from_collection_for_select(@transfer_courses, :id, :full_name) %>
+</div><!-- .transfer-course-select -->
+<div class="other-course">
+  <div>
+    <%= label_tag :other_course, "Transfer course" %>
+    <%= text_field_tag :other_course %>
+  </div>
+  <div>
+    <%= label_tag :other_course_num, "Course number" %>
+    <%= text_field_tag :other_course_num %>
+  </div>
+  <div>
+    <%= label_tag :other_course_url, "Catalog URL" %>
+    <%= text_field_tag :other_course_url %>
+  </div>
+</div><!-- .other-course -->
+<div>
+  <%= label_tag :other_course_check, "Other course" %>
+  <%= check_box_tag :other_course_check %>
 </div>
 <div>
   <%= label_tag :online %>
