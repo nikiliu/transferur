@@ -5,4 +5,5 @@ class PendingRequest < ActiveRecord::Base
   validates :transfer_course_name,          presence: true
   validates :transfer_course_num,           presence: true
   validates :ur_course_id,                  presence: true
+  validates :url,                           presence: true
 end

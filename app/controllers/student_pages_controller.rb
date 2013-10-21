@@ -20,9 +20,21 @@ class StudentPagesController < ApplicationController
     student_email      = params[:email]
     transfer_school_id = params[:transfer_school]
     transfer_course_id = params[:transfer_course]
-    transfer_online    = params[:online] == "1"            # convert to boolean
-    transfer_dual      = params[:dual_enrollment] == "1"   # convert to boolean
+    transfer_online    = params[:online] == "1"                # convert to boolean
+    transfer_dual      = params[:dual_enrollment] == "1"       # convert to boolean
     ur_course_id       = params[:course_number]
+
+    # Other school data
+    other_school_check = params[:other_school_check] == "1"   # convert to boolean
+    other_school       = params[:other_school]
+    other_school_loc   = params[:other_school_location]
+    other_school_int   = params[:international] == "1"        # convert to boolean
+
+    # Other course data
+    other_course_check = params[:other_course_check] == "1"   # convert to boolean
+    other_course       = params[:other_course]
+    other_course_num   = params[:other_course_num]
+    other_course_url   = params[:other_course_url]
 
     # Validate name and email fields
     if student_name.empty?

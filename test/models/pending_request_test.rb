@@ -7,7 +7,8 @@ class PendingRequestTest < ActiveSupport::TestCase
                                           transfer_school_international: false,
                                           transfer_course_name: "Foo",
                                           transfer_course_num: "Bar",
-                                          ur_course_id: 1)
+                                          ur_course_id: 1,
+                                          url: "http://example.com/")
   end
 
   def teardown
@@ -21,6 +22,7 @@ class PendingRequestTest < ActiveSupport::TestCase
     assert @pending_request.respond_to? :transfer_course_name
     assert @pending_request.respond_to? :transfer_course_num
     assert @pending_request.respond_to? :ur_course_id
+    assert @pending_request.respond_to? :url
   end
 
   test "valid pending request" do
