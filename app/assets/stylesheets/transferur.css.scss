@@ -222,6 +222,11 @@ form {
     &.other-school, &.other-course {
       display: none;
     }
+    &.transfer-course-select {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid darken(white, 10%);
+    }
   }
   label {
     @include inline-block;

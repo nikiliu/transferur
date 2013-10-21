@@ -24,18 +24,21 @@ $("#transfer_school").change(() ->
 #------------------------------------------------------------------------
 $("#other_school_check").change () ->
   if $(this).is(":checked")
-    $(".transfer-school").hide()
+    $("#transfer_school").prop("disabled", true)
     $(".other-school").show()
+    $("#other_course_check").prop("checked", true).prop("disabled", true).change()
   else
-    $(".transfer-school").show()
+    $("#transfer_school").prop("disabled", false)
     $(".other-school").hide()
+    $("#other_course_check").prop("checked", false).prop("disabled", false).change()
 
 # Swap input for other transfer course
 #------------------------------------------------------------------------
 $(".transfer-course").on "change", "#other_course_check", () ->
+  $(this).prop("checked", true) if $("#other_school_check").is(":checked")
   if $(this).is(":checked")
-    $(".transfer-course-select").hide()
+    $("#transfer_course").prop("disabled", true)
     $(".other-course").show()
   else
-    $(".transfer-course-select").show()
+    $("#transfer_course").prop("disabled", false)
     $(".other-course").hide()
