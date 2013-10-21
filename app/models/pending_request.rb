@@ -1,4 +1,7 @@
 class PendingRequest < ActiveRecord::Base
+  validates :requester_name,  presence: true
+  validates :requester_email, presence: true, format: { with: /@/ }
+
   validates :transfer_school_id,            presence: true,                   unless: :transfer_school_other?
   validates :transfer_school_other,         inclusion: { in: [true, false] }
   validates :transfer_school_name,          presence: true,                   if: :transfer_school_other?

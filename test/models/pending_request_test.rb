@@ -3,6 +3,8 @@ require 'test_helper'
 class PendingRequestTest < ActiveSupport::TestCase
   def setup
     @pending_request_1 = PendingRequest.new(
+      requester_name: "Foo",
+      requester_email: "foo@bar.com",
       transfer_school_id: 1,
       transfer_course_id: 1,
       transfer_school_other: false,
@@ -10,6 +12,8 @@ class PendingRequestTest < ActiveSupport::TestCase
       ur_course_id: 1
     )
     @pending_request_2 = PendingRequest.new(
+      requester_name: "Foo",
+      requester_email: "foo@bar.com",
       transfer_school_id: 1,
       transfer_school_other: false,
       transfer_course_other: true,
@@ -19,6 +23,8 @@ class PendingRequestTest < ActiveSupport::TestCase
       ur_course_id: 1
     )
     @pending_request_3 = PendingRequest.new(
+      requester_name: "Foo",
+      requester_email: "foo@bar.com",
       transfer_school_other: true,
       transfer_school_name: "Bar University",
       transfer_school_location: "Bar Town",
@@ -63,6 +69,21 @@ class PendingRequestTest < ActiveSupport::TestCase
 
   test "valid pending request with other school" do
     assert @pending_request_3.valid?
+  end
+
+  test "missing requester name" do
+    @pending_request_1.requester_name = ""
+    assert !@pending_request_1.valid?
+  end
+
+  test "missing requester email" do
+    @pending_request_1.requester_email = ""
+    assert !@pending_request_1.valid?
+  end
+
+  test "invalid requester email" do
+    @pending_request_1.requester_email = "foo"
+    assert !@pending_request_1.valid?
   end
 
   test "missing transfer school name" do
