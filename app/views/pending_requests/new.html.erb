@@ -1,2 +1,53 @@
-<h1>PendingRequests#new</h1>
-<p>Find me in app/views/pending_requests/new.html.erb</p>
+<ul class="notices">
+  <li>This form is for current UR students wishing to transfer in a single course.</li>
+  <li>
+    This form is for departmental approval only. If this course is approved, you must
+    still complete all steps listed in the
+    <%= link_to "transfer approval process", "http://math.richmond.edu/program/transfer.html" %>.
+  </li>
+</ul><!-- .notices -->
+
+<%= form_for(@request) do |f| %>
+  <div class="separator"><span>1</span> A little about you</div>
+  <div>
+    <%= f.label :requester_name, "Name" %>
+    <%= f.text_field :requester_name %>
+  </div>
+  <div>
+    <%= f.label :requester_email, "Email" %>
+    <%= f.email_field :requester_email %>
+  </div>
+
+  <div class="separator"><span>2</span> Transfer school &amp; course</div>
+  <div class="transfer-school">
+    <%= f.label :transfer_school_id %>
+    <%= f.select :transfer_school_id, options_from_collection_for_select(@transfer_schools, :id, :name) %>
+  </div><!-- .transfer-school -->
+  <div>
+    <%= f.label :transfer_school_other, "Other school" %>
+    <%= f.check_box :transfer_school_other %>
+  </div>
+  <div class="other-school">
+    <div>
+      <%= f.label :transfer_school_name, "Transfer school" %>
+      <%= f.text_field :transfer_school_name %>
+    </div>
+    <div>
+      <%= f.label :transfer_school_location, "Location" %>
+      <%= f.text_field :transfer_school_location %>
+    </div>
+    <div>
+      <%= f.label :transfer_school_international, "International" %>
+      <%= f.check_box :transfer_school_international %>
+    </div>
+  </div><!-- .other-school -->
+  <div class="transfer-course"></div>
+
+  <div class="separator"><span>3</span> UR course</div>
+  <div>
+    <%= f.label :ur_course_id, "UR course" %>
+    <%= f.select :ur_course_id, options_from_collection_for_select(@ur_courses, :id, :full_name) %>
+  </div>
+
+  <%= f.submit "Submit" %>
+<% end %>
