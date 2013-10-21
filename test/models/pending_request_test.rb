@@ -2,50 +2,91 @@ require 'test_helper'
 
 class PendingRequestTest < ActiveSupport::TestCase
   def setup
-    @pending_request = PendingRequest.new(transfer_school_name: "Foo",
-                                          transfer_school_location: "Bar",
-                                          transfer_school_international: false,
-                                          transfer_course_name: "Foo",
-                                          transfer_course_num: "Bar",
-                                          ur_course_id: 1,
-                                          url: "http://example.com/")
+    @pending_request_1 = PendingRequest.new(
+      transfer_school_id: 1,
+      transfer_course_id: 1,
+      transfer_school_other: false,
+      transfer_course_other: false,
+      ur_course_id: 1
+    )
+    @pending_request_2 = PendingRequest.new(
+      transfer_school_id: 1,
+      transfer_school_other: false,
+      transfer_course_other: true,
+      transfer_course_name: "Foo Class",
+      transfer_course_num: "Foo 101",
+      transfer_course_url: "http://foo.com/",
+      ur_course_id: 1
+    )
+    @pending_request_3 = PendingRequest.new(
+      transfer_school_other: true,
+      transfer_school_name: "Bar University",
+      transfer_school_location: "Bar Town",
+      transfer_school_international: false,
+      transfer_course_other: true,
+      transfer_course_name: "Foo Class",
+      transfer_course_num: "Foo 101",
+      transfer_course_url: "http://foo.com/",
+      ur_course_id: 1
+    )
   end
 
   def teardown
-    @pending_request.destroy!
+    @pending_request_1.destroy!
+    @pending_request_2.destroy!
+    @pending_request_3.destroy!
   end
 
   test "correct schema" do
-    assert @pending_request.respond_to? :transfer_school_name
-    assert @pending_request.respond_to? :transfer_school_location
-    assert @pending_request.respond_to? :transfer_school_international
-    assert @pending_request.respond_to? :transfer_course_name
-    assert @pending_request.respond_to? :transfer_course_num
-    assert @pending_request.respond_to? :ur_course_id
-    assert @pending_request.respond_to? :url
+    assert @pending_request_1.respond_to? :transfer_school_id
+    assert @pending_request_1.respond_to? :transfer_school_other
+    assert @pending_request_1.respond_to? :transfer_school_name
+    assert @pending_request_1.respond_to? :transfer_school_location
+    assert @pending_request_1.respond_to? :transfer_school_international
+
+    assert @pending_request_1.respond_to? :transfer_course_id
+    assert @pending_request_1.respond_to? :transfer_course_other
+    assert @pending_request_1.respond_to? :transfer_course_name
+    assert @pending_request_1.respond_to? :transfer_course_num
+    assert @pending_request_1.respond_to? :transfer_course_url
+
+    assert @pending_request_1.respond_to? :ur_course_id
   end
 
-  test "valid pending request" do
-    assert @pending_request.valid?
+  test "valid pending request without other school or course" do
+    assert @pending_request_1.valid?
   end
 
-  test "no transfer school name" do
-    @pending_request.transfer_school_name = ""
-    assert !@pending_request.valid?
+  test "valid pending request with other course" do
+    assert @pending_request_2.valid?
   end
 
-  test "no transfer school location" do
-    @pending_request.transfer_school_location = ""
-    assert !@pending_request.valid?
+  test "valid pending request with other school" do
+    assert @pending_request_3.valid?
   end
 
-  test "no transfer course name" do
-    @pending_request.transfer_course_name = ""
-    assert !@pending_request.valid?
+  test "missing transfer school name" do
+    @pending_request_3.transfer_school_name = ""
+    assert !@pending_request_3.valid?
   end
 
-  test "no transfer course num" do
-    @pending_request.transfer_course_num = ""
-    assert !@pending_request.valid?
+  test "missing transfer school location" do
+    @pending_request_3.transfer_school_location = ""
+    assert !@pending_request_3.valid?
+  end
+
+  test "missing transfer course name" do
+    @pending_request_2.transfer_course_name = ""
+    assert !@pending_request_2.valid?
+  end
+
+  test "missing transfer course num" do
+    @pending_request_2.transfer_course_num = ""
+    assert !@pending_request_2.valid?
+  end
+
+  test "missing transfer course url" do
+    @pending_request_2.transfer_course_url = ""
+    assert !@pending_request_2.valid?
   end
 end
