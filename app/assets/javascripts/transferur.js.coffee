@@ -26,11 +26,15 @@ $("#other_school_check").change () ->
   if $(this).is(":checked")
     $("#transfer_school").prop("disabled", true)
     $(".other-school").show()
-    $("#other_course_check").prop("checked", true).prop("disabled", true).change()
+    $("#other_course_check").prop("checked", true)
+                            .prop("disabled", true)
+                            .change()
   else
     $("#transfer_school").prop("disabled", false)
     $(".other-school").hide()
-    $("#other_course_check").prop("checked", false).prop("disabled", false).change()
+    $("#other_course_check").prop("checked", false)
+                            .prop("disabled", false)
+                            .change()
 
 # Swap input for other transfer course
 #------------------------------------------------------------------------
