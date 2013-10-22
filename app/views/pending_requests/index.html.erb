@@ -1,0 +1,13 @@
+<ul class="notices">
+  <li>You are currently managing pending requests.</li>
+</ul><!-- .notices -->
+
+<% if @requests.count > 0 %>
+  <ul class="pending-requests">
+  <% @requests.each do |request| %>
+    <li><%= link_to request.id, "#" %></li>
+  <% end %>
+  </ul><!-- .pending-requests -->
+<% else %>
+  <p>No pending requests, hooray!</p>
+<% end %>

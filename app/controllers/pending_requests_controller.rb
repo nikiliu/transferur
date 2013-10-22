@@ -40,7 +40,7 @@ class PendingRequestsController < ApplicationController
 
       # Create new PendingRequest
       else
-        # @request.save
+        @request.save
         flash[:pending] = pending_message
         AdminMailer.pending_request_notification.deliver
       end
@@ -61,6 +61,8 @@ class PendingRequestsController < ApplicationController
   end
 
   def index
+    @title    = "Pending Requests"
+    @requests = PendingRequest.all
   end
 
   def edit
