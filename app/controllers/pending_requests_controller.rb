@@ -20,7 +20,7 @@ class PendingRequestsController < ApplicationController
       email_params = generate_email_hash(params)
 
       # Cannot approve online course requests
-      if checkbox_boolean(:online)
+      if checkbox_boolean(params, :online)
         flash[:success]         = success_message
         email_params[:approved] = false
         email_params[:reasons]  = "Online courses not accepted."
@@ -32,7 +32,7 @@ class PendingRequestsController < ApplicationController
       # TransferRequest object found in database, it was updated within 5 years, and this
       # is not a dual enrollment request.
       query = TransferRequest.find_by(query_params)
-      if !query.nil? and query.updated_at >= 5.years.ago and not checkbox_boolean(:dual_enrollment)
+      if !query.nil? and query.updated_at >= 5.years.ago and not checkbox_boolean(params, :dual_enrollment)
         flash[:success]         = success_message
         email_params[:approved] = query.approved
         email_params[:reasons]  = query.reasons
@@ -101,29 +101,29 @@ class PendingRequestsController < ApplicationController
 
     # Returns email parameters hash given the params from "create"
     def generate_email_hash(params)
-      transfer_school = School.find_by(id: param_val(:transfer_school_id))
-      transfer_course = transfer_school.courses.find_by(id: param_val(:transfer_course_id))
-      ur_course       = School.first.courses.find_by(id: param_val(:ur_course_id))
+      transfer_school = School.find_by(id: param_val(params, :transfer_school_id))
+      transfer_course = transfer_school.courses.find_by(id: param_val(params, :transfer_course_id))
+      ur_course       = School.first.courses.find_by(id: param_val(params, :ur_course_id))
       {
-        name:                 param_val(:requester_name),
-        email:                param_val(:requester_email),
+        name:                 param_val(params, :requester_name),
+        email:                param_val(params, :requester_email),
         transfer_school:      transfer_school.name,
         transfer_course_name: transfer_course.name,
         transfer_course_num:  transfer_course.course_num,
         ur_course_name:       ur_course.name,
         ur_course_num:        ur_course.course_num,
-        dual_enrollment:      params[:dual_enrollment],
-        online:               params[:online],
+        dual_enrollment:      checkbox_boolean(params, :dual_enrollment),
+        online:               checkbox_boolean(params, :online),
       }
     end
 
     # Gets value of given key in params hash
-    def param_val(key)
+    def param_val(params, key)
       params[:pending_request][key]
     end
 
     # Returns true if the passed checkbox value in params was checked
-    def checkbox_boolean(checkbox_val)
+    def checkbox_boolean(params, checkbox_val)
       params[checkbox_val] == "1"
     end
 
