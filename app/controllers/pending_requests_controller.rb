@@ -1,6 +1,6 @@
 class PendingRequestsController < ApplicationController
-  before_filter :authenticate_user!,  only: [:show, :edit, :update, :destroy]
   before_filter :schools_and_courses, only: [:new, :create]
+  before_filter :authenticate_user!,  only: [:index, :edit, :update, :destroy]
 
   def new
     @request = PendingRequest.new
@@ -42,6 +42,7 @@ class PendingRequestsController < ApplicationController
       else
         # @request.save
         flash[:pending] = pending_message
+        AdminMailer.pending_request_notification.deliver
       end
 
       # Redirect back to form
@@ -59,7 +60,7 @@ class PendingRequestsController < ApplicationController
     render partial: "transfer_courses_options"
   end
 
-  def show
+  def index
   end
 
   def edit
