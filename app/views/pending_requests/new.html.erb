@@ -1,3 +1,5 @@
+<%= render "error_messages" %>
+
 <ul class="notices">
   <li>This form is for current UR students wishing to transfer in a single course.</li>
   <li>
@@ -7,7 +9,7 @@
   </li>
 </ul><!-- .notices -->
 
-<%= form_for(@request) do |f| %>
+<%= form_for(@request, url: root_path) do |f| %>
   <div class="separator"><span>1</span> A little about you</div>
   <div>
     <%= f.label :requester_name, "Name" %>
@@ -41,7 +43,38 @@
       <%= f.check_box :transfer_school_international %>
     </div>
   </div><!-- .other-school -->
-  <div class="transfer-course"></div>
+  <div class="transfer-course">
+    <div class="transfer-course-select">
+      <%= f.label :transfer_course_id %>
+      <%= f.select :transfer_course_id, "<option>Please enable JavaScript</option>".html_safe %>
+    </div><!-- .transfer-course-select -->
+    <div>
+      <%= f.label :transfer_course_other, "Other course" %>
+      <%= f.check_box :transfer_course_other %>
+    </div>
+    <div class="other-course">
+      <div>
+        <%= f.label :transfer_course_name, "Transfer course" %>
+        <%= f.text_field :transfer_course_name %>
+      </div>
+      <div>
+        <%= f.label :transfer_course_num, "Course number" %>
+        <%= f.text_field :transfer_course_num %>
+      </div>
+      <div>
+        <%= f.label :transfer_course_url, "Catalog URL" %>
+        <%= f.url_field :transfer_course_url %>
+      </div>
+    </div><!-- .other-course -->
+    <div>
+      <%= label_tag :online %>
+      <%= check_box_tag :online %>
+    </div>
+    <div>
+      <%= label_tag :dual_enrollment %>
+      <%= check_box_tag :dual_enrollment %>
+    </div>
+  </div><!-- .transfer-course -->
 
   <div class="separator"><span>3</span> UR course</div>
   <div>
