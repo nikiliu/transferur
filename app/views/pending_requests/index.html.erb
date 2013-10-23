@@ -1,11 +1,11 @@
 <ul class="notices">
-  <li>You are currently managing pending requests.</li>
+  <li><%= link_to "Pending Requests", pending_requests_path %></li>
 </ul><!-- .notices -->
 
 <% if @requests.count > 0 %>
   <ul class="pending-requests">
   <% @requests.each do |request| %>
-    <li><%= link_to request.id, "#" %></li>
+    <li><%= link_to pending_request_display(request), edit_pending_request_path(request) %></li>
   <% end %>
   </ul><!-- .pending-requests -->
 <% else %>

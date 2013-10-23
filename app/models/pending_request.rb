@@ -16,6 +16,21 @@ class PendingRequest < ActiveRecord::Base
 
   validates :ur_course_id, presence: true
 
+  # Returns School based on transfer_school_id
+  def transfer_school
+    School.find_by(id: transfer_school_id)
+  end
+
+  # Returns Course based on transfer_school_id and transfer_course_id
+  def transfer_course
+    transfer_school.courses.find_by(id: transfer_course_id)
+  end
+
+  # Returns UR course
+  def ur_course
+    School.first.courses.find_by(id: ur_course_id)
+  end
+
   # Returns whether the transfer_school_other field is true
   def transfer_school_other?
     transfer_school_other == true
