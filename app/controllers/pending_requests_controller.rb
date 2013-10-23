@@ -15,41 +15,33 @@ class PendingRequestsController < ApplicationController
 
     # Validate form input
     if @request.valid?
-
-      # Generate email parameters hash
-      email_params = generate_email_hash(params)
-
-      # Cannot approve online course requests
-      if checkbox_boolean(params, :online)
-        flash[:success]         = success_message
-        email_params[:approved] = false
-        email_params[:reasons]  = "Online courses not accepted."
-        ResultsMailer.result_email(email_params).deliver
-        redirect_to root_path
-        return
-      end
-
-      # TransferRequest object found in database, it was updated within 5 years, and this
-      # is not a dual enrollment request.
-      query = TransferRequest.find_by(query_params)
-      if not query.nil? and query.updated_at >= 5.years.ago and not checkbox_boolean(params, :dual_enrollment)
-        flash[:success]         = success_message
-        email_params[:approved] = query.approved
-        email_params[:reasons]  = query.reasons
-        ResultsMailer.result_email(email_params).deliver
-
-      # Create new PendingRequest
+      if params[:online] == "1"
+        # Cannot approve online course requests
+        flash[:success] = success_message
+        ResultsMailer.result_email(params, {
+          approved: false,
+          reasons:  "Online courses not accepted."
+        }).deliver
       else
-        @request.save
-        flash[:pending] = pending_message
-        AdminMailer.pending_request_notification.deliver
+        query = TransferRequest.find_by(query_params)
+        if !query.nil? and query.updated_at >= 5.years.ago and params[:dual_enrollment] != "1"
+          # TransferRequest object found in database, it was updated within 5 years, and this
+          # is not a dual enrollment request.
+          flash[:success] = success_message
+          ResultsMailer.result_email(params, {
+            approved: query.approved,
+            reasons:  query.reasons
+          }).deliver
+        else
+          # Create new PendingRequest
+          # @request.save
+          flash[:pending] = pending_message
+          AdminMailer.pending_request_notification.deliver
+        end
       end
-
-      # Redirect back to form
       redirect_to root_path
-
-    # Invalid form input, display errors
     else
+      # Invalid form input, display errors
       render "new"
     end
   end
@@ -101,48 +93,6 @@ class PendingRequestsController < ApplicationController
         :transfer_course_id,
         :ur_course_id
       )
-    end
-
-    # Returns email parameters hash given the params from "create"
-    def generate_email_hash(params)
-      transfer_school = { name: param_val(params, :transfer_school_name) }
-      if not checkbox_boolean(params[:pending_request], :transfer_school_other)
-        transfer_school[:name] = School.find_by(id: param_val(params, :transfer_school_id)).name
-      end
-
-      transfer_course = {
-        name:       param_val(params, :transfer_course_name),
-        course_num: param_val(params, :transfer_course_num)
-      }
-      if not checkbox_boolean(params[:pending_request], :transfer_course_other)
-        course                       = transfer_school.courses.find_by(id: param_val(params, :transfer_course_id))
-        transfer_course[:name]       = course.name
-        transfer_course[:course_num] = course.course_num
-      end
-
-      ur_course = School.first.courses.find_by(id: param_val(params, :ur_course_id))
-
-      {
-        name:                 param_val(params, :requester_name),
-        email:                param_val(params, :requester_email),
-        transfer_school:      transfer_school[:name],
-        transfer_course_name: transfer_course[:name],
-        transfer_course_num:  transfer_course[:course_num],
-        ur_course_name:       ur_course.name,
-        ur_course_num:        ur_course.course_num,
-        dual_enrollment:      checkbox_boolean(params, :dual_enrollment),
-        online:               checkbox_boolean(params, :online),
-      }
-    end
-
-    # Gets value of given key in params hash
-    def param_val(params, key)
-      params[:pending_request][key]
-    end
-
-    # Returns true if the passed checkbox value in params was checked
-    def checkbox_boolean(params, checkbox_val)
-      params[checkbox_val] == "1"
     end
 
     # Sets instance variables for "new" and "create"

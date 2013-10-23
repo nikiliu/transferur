@@ -1,18 +1,13 @@
 class ResultsMailer < ActionMailer::Base
   default from: "noreply@richmond.edu"
 
-  def result_email(data)
-    @name                 = data[:name]
-    @email                = data[:email]
-    @transfer_school      = data[:transfer_school]
-    @transfer_course_name = data[:transfer_course_name]
-    @transfer_course_num  = data[:transfer_course_num]
-    @dual_enrollment      = data[:dual_enrollment]
-    @online               = data[:online]
-    @ur_course_name       = data[:ur_course_name]
-    @ur_course_num        = data[:ur_course_num]
-    @approved             = data[:approved]
-    @reasons              = data[:reasons]
-    mail(to: @email, subject: "UR Math Course Transfer Request")
+  def result_email(params, options)
+    @request         = params[:pending_request]
+    @other_school    = @request[:transfer_school_other] == "1"
+    @other_course    = @request[:transfer_course_other] == "1"
+    @online          = params[:online]                  == "1"
+    @dual_enrollment = params[:dual_enrollment]         == "1"
+    @options         = options
+    mail(to: @request[:requester_email], subject: "UR Math Course Transfer Request")
   end
 end

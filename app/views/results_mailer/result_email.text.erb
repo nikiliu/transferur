@@ -1,6 +1,16 @@
-Hello <%= @name %>. You have recently submitted a UR Math Course Transfer Request:
+Hello <%= @request[:requester_name] %>. You have recently submitted a UR Math Course Transfer Request:
 
 ==================================================================================
+<% if @other_school %>
+Transfer school: <%= @request[:transfer_school_name] %>
+       location: <%= @request[:transfer_school_location] %>
+  international: <%= @request[:transfer_school_international] == "1" %>
+<% else %>
+<% transfer_school = School.find_by(@request[:transfer_school_id]) %>
+Transfer school: <%= transfer_school.name %>
+       location: <%= transfer_school.location %>
+  international: <%= transfer_school.international %>
+<% end %>
 Transfer school: <%= @transfer_school %>
 Transfer course: <%= @transfer_course_name %> (<%= @transfer_course_num %>)
 Dual enrollment: <%= @dual_enrollment %>
