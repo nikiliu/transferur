@@ -2,29 +2,32 @@ Hello <%= @request[:requester_name] %>. You have recently submitted a UR Math Co
 
 ==================================================================================
 <% if @other_school %>
-Transfer school: <%= @request[:transfer_school_name] %>
-       location: <%= @request[:transfer_school_location] %>
-  international: <%= @request[:transfer_school_international] == "1" %>
+Transfer school: <%= @request[:transfer_school_name] %> (<%= @request[:transfer_school_location] %>)
+  International: <%= @request[:transfer_school_international] == "1" %>
 <% else %>
-<% transfer_school = School.find_by(@request[:transfer_school_id]) %>
-Transfer school: <%= transfer_school.name %>
-       location: <%= transfer_school.location %>
-  international: <%= transfer_school.international %>
+<% transfer_school = School.find_by(id: @request[:transfer_school_id]) %>
+Transfer school: <%= transfer_school.name %> (<%= transfer_school.location %>)
+  International: <%= transfer_school.international %>
 <% end %>
-Transfer school: <%= @transfer_school %>
-Transfer course: <%= @transfer_course_name %> (<%= @transfer_course_num %>)
+<% if @other_course %>
+Transfer course: <%= @request[:transfer_course_name] %> (<%= @request[:transfer_course_num] %>)
+<% else %>
+<% transfer_course = School.find_by(id: @request[:transfer_school_id]).courses.find_by(id: @request[:transfer_course_id]) %>
+Transfer course: <%= transfer_course.name %> (<%= transfer_course.course_num %>)
+<% end %>
 Dual enrollment: <%= @dual_enrollment %>
-Online:          <%= @online %>
-UR course:       <%= @ur_course_name %> (<%= @ur_course_num %>)
+         Online: <%= @online %>
+<% ur_course = School.first.courses.find_by(id: @request[:ur_course_id]) %>
+      UR course: <%= ur_course.name %> (<%= ur_course.course_num %>)
 ==================================================================================
 
-<% if @approved %>
+<% if @options[:approved] %>
 This request has been approved. Please complete the steps listed in
 http://math.richmond.edu/program/transfer.html to complete your transfer process.
 <% else %>
-This request cannot be approved for the following reasons:
+This request cannot be approved for the following reason(s):
 
-  <%= @reasons %>
+  <%= @options[:reasons] %>
 <% end %>
 
 If you have any questions, please email lcaudill@richmond.edu.
