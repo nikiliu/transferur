@@ -40,6 +40,13 @@ class SchoolsController < ApplicationController
 
   def destroy
     school = School.find_by(id: params[:id])
+
+    # Delete all requests that had this transfer school
+    requests = TransferRequest.where(transfer_school_id: school.id)
+    requests.each do |request|
+      request.destroy!
+    end
+
     school.destroy!
     flash[:success] = "School successfully deleted."
     redirect_to schools_path
