@@ -8,4 +8,11 @@ module ApplicationHelper
 
     "#{default} | #{title}"
   end
+
+  def body_class(set_class)
+    if set_class.nil?
+      return "profile"
+    end
+    set_class
+  end
 end

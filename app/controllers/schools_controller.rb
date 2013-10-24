@@ -1,5 +1,6 @@
 class SchoolsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :set_body_class
 
   def index
     @title   = "Schools & Courses"
@@ -56,5 +57,9 @@ class SchoolsController < ApplicationController
 
     def protected_params
       params.require(:school).permit(:name, :location, :international)
+    end
+
+    def set_body_class
+      @body_class = "schools"
     end
 end

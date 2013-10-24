@@ -126,6 +126,13 @@ body {
     }
   }
 }
+.live .live a,
+.schools .schools a,
+.requests .requests a,
+.profile .profile a {
+  background: lighten($color-lake-blue, 5%);
+  color: white;
+}
 
 // Independent Components
 //------------------------------------------------------------------------

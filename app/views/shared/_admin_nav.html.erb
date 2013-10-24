@@ -1,10 +1,10 @@
 <% if user_signed_in? %>
   <div class="admin-nav">
     <ul>
-      <li><%= link_to "Live Form", root_path %></li>
-      <li><%= link_to "Schools & Courses", schools_path %></li>
-      <li><%= link_to "Pending Requests", pending_requests_path %></li>
-      <li><%= link_to "Profile", edit_user_registration_path %></li>
+      <li class="live"><%= link_to "Live Form", root_path %></li>
+      <li class="schools"><%= link_to "Schools & Courses", schools_path %></li>
+      <li class="requests"><%= link_to "Pending Requests", pending_requests_path %></li>
+      <li class="profile"><%= link_to "Profile", edit_user_registration_path %></li>
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
     </ul>
   </div><!-- .admin-nav -->

@@ -1,5 +1,6 @@
 class TransferRequestsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :set_body_class
 
   def new
     @title           = "New Transfer Request"
@@ -57,5 +58,9 @@ class TransferRequestsController < ApplicationController
         :approved,
         :reasons
       )
+    end
+
+    def set_body_class
+      @body_class = "schools"
     end
 end

@@ -1,12 +1,15 @@
 class PendingRequestsController < ApplicationController
   before_filter :schools_and_courses, only: [:new, :create]
   before_filter :authenticate_user!,  only: [:index, :edit, :update, :destroy]
+  before_filter :set_body_class
 
   def new
-    @request = PendingRequest.new
+    @body_class = "live"
+    @request    = PendingRequest.new
   end
 
   def create
+    @body_class     = "live"
     @request        = PendingRequest.new(protected_params)
     success_message = "Your transfer request was successfully submitted. Please check " +
                       "your email to see if your request was approved."
@@ -201,5 +204,9 @@ class PendingRequestsController < ApplicationController
       obj.attribute_names.each do |attr|
         hash[attr.to_sym] = obj.read_attribute(attr)
       end
+    end
+
+    def set_body_class
+      @body_class = "requests"
     end
 end
