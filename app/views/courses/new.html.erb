@@ -1,8 +1,12 @@
-<%= render "error_messages" %>
-<%= render "notices" %>
+<div class="breadcrumbs">
+  <%= link_to "Schools & Courses", schools_path %> >
+  <%= link_to @school.name, edit_school_path(@school) %> >
+  New Course
+</div><!-- .breadcrumbs -->
 
 <%= form_for @course, url: courses_path(@school) do |f| %>
-  <div class="separator"><span>+</span> New Course</div>
+  <%= render "error_messages" %>
+  <div class="separator"><span>+</span> New Course at <%= @school.name %></div>
   <div>
     <%= f.label :name %>
     <%= f.text_field :name %>

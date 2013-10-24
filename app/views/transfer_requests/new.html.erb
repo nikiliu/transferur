@@ -1,15 +1,13 @@
-<%= render "error_messages" %>
-<ul class="notices">
-  <li>
-    <%= link_to "Schools & Courses", schools_path %> >
-    <%= link_to @transfer_school.name, edit_school_path(@transfer_school) %> >
-    <%= link_to @transfer_course.name, edit_course_path(@transfer_school, @transfer_course) %> >
-    New Transfer Request
-  </li>
-</ul><!-- .notices -->
+<div class="breadcrumbs">
+  <%= link_to "Schools & Courses", schools_path %> >
+  <%= link_to @transfer_school.name, edit_school_path(@transfer_school) %> >
+  <%= link_to @transfer_course.name, edit_course_path(@transfer_school, @transfer_course) %> >
+  New Transfer Request
+</div><!-- .breadcrumbs -->
 
 <%= form_for @request, url: transfer_request_path(@request) do |f| %>
-  <div class="separator"><span>+</span> New Transfer Request</div>
+  <%= render "error_messages" %>
+  <div class="separator"><span>+</span> New Transfer Request from <%= @transfer_course.course_num %></div>
   <%= f.hidden_field :transfer_school_id, value: @transfer_school.id %>
   <%= f.hidden_field :transfer_course_id, value: @transfer_course.id %>
   <div>

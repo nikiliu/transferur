@@ -1,29 +1,60 @@
-<ul class="notices">
-  <li><%= link_to "Pending Requests", pending_requests_path %> > Review Pending Request</li>
-</ul><!-- .notices -->
+<div class="breadcrumbs">
+  <%= link_to "Pending Requests", pending_requests_path %> >
+  Review Pending Request
+</div><!-- .breadcrumbs -->
 
-<h2>Pending Transfer Request Details</h2>
-<ul>
-  <li>Requester name: <%= @request.requester_name %></li>
-  <li>Requester email: <%= @request.requester_email %></li>
+<h2>Review Pending Request</h2>
+<ul class="data-list">
+  <li>
+    <span class="key">Requester name:</span>
+    <span><%= @request.requester_name %></span>
+  </li>
+  <li>
+    <span class="key">Requester email:</span>
+    <span><%= @request.requester_email %></span>
+  </li>
 
   <% if @request.transfer_school_other %>
-    <li><span>Transfer School:</span> <%= @request.transfer_school_name %> (<%= @request.transfer_school_location %>)</li>
-    <li><span>International:</span> <%= @request.transfer_school_international %></li>
+    <li>
+      <span class="key">Transfer School:</span>
+      <span><%= @request.transfer_school_name %> (<%= @request.transfer_school_location %>)</span>
+    </li>
+    <li>
+      <span class="key">International:</span>
+      <span><%= @request.transfer_school_international %></span>
+    </li>
   <% else %>
-    <li><span>Transfer School:</span> <%= @request.transfer_school.name %></li>
+    <li>
+      <span class="key">Transfer School:</span>
+      <span><%= @request.transfer_school.name %></span>
+    </li>
   <% end %>
 
   <% if @request.transfer_course_other %>
-    <li><span>Transfer Course:</span> <%= @request.transfer_course_name %> (<%= @request.transfer_course_num %>)</li>
-    <li><span>Course URL:</span> <%= link_to @request.transfer_course_url, @request.transfer_course_url %></li>
+    <li>
+      <span class="key">Transfer Course:</span>
+      <span><%= @request.transfer_course_name %> (<%= @request.transfer_course_num %>)</span>
+    </li>
+    <li>
+      <span class="key">Course URL:</span>
+      <span><%= link_to @request.transfer_course_url, @request.transfer_course_url %></span>
+    </li>
   <% else %>
-    <li><span>Transfer Course:</span> <%= @request.transfer_course.full_name %></li>
+    <li>
+      <span class="key">Transfer Course:</span>
+      <span><%= @request.transfer_course.full_name %></span>
+    </li>
   <% end %>
-  <li><span>Dual enrollment:</span> <%= @request.dual_enrollment %></li>
+  <li>
+    <span class="key">Dual enrollment:</span>
+    <span><%= @request.dual_enrollment %></span>
+  </li>
 
-  <li><span>UR Course:</span> <%= @request.ur_course.full_name %></li>
-</ul>
+  <li>
+    <span class="key">UR Course:</span>
+    <span><%= @request.ur_course.full_name %></span>
+  </li>
+</ul><!-- .data-list -->
 
 <%= form_tag do %>
   <div>

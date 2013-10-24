@@ -106,7 +106,8 @@ body {
 }
 .main {
   font-size: 1.6em;
-  padding: 50px;
+  position: relative;
+  padding: 25px 50px 50px 50px;
 }
 .notices {
   @include border-radius(3px);
@@ -140,10 +141,72 @@ body {
   }
 }
 
+// Independent Components
+//------------------------------------------------------------------------
+p {
+  margin-top: 25px;
+}
+h2 {
+  font-size: 1.6em;
+  margin-top: 25px;
+}
+.action-button {
+  @include inline-block;
+  @include transition(0.1s ease-in-out);
+  @include border-radius(3px);
+  background: darken($color-leaf-green, 8%);
+  text-decoration: none;
+  color: white;
+  padding: 13px 15px;
+
+  &:hover {
+    background: darken($color-leaf-green, 13%);
+  }
+  &.warning {
+    background: lighten($color-spider-red, 15%);
+
+    &:hover {
+      background: lighten($color-spider-red, 10%);
+    }
+  }
+}
+.breadcrumbs {
+  @include border-radius(3px);
+  @include box-sizing(border-box);
+  background: darken(white, 3%);
+  font-size: 0.8em;
+  padding: 10px 15px;
+  border: 1px solid darken(white, 7%);
+}
+.data-list {
+  padding: 15px 25px;
+
+  li {
+    padding: 4px 0;
+    border-top: 1px solid darken(white, 8%);
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+  span {
+    @include inline-block;
+    min-width: 140px;
+
+    &.key {
+      text-align: right;
+      padding-right: 15px;
+    }
+  }
+}
+
 // Schools & Courses
 //------------------------------------------------------------------------
 .schools, .courses, .transfer-requests, .pending-requests {
+  @include border-radius(3px);
   margin-top: 25px;
+  border: 1px solid darken(white, 7%);
+  overflow: hidden;
 
   li {
     @include clearfix;
@@ -152,7 +215,7 @@ body {
       background: darken(white, 2%);
     }
     &:hover {
-      background: darken(white, 10%);
+      background: darken(white, 5%);
 
       span {
         display: block;
@@ -177,6 +240,12 @@ body {
     display: block;
     width: 85%;
     padding: 10px 15px;
+
+    &.action-button {
+      @include border-radius(0px);
+      color: white;
+      width: 100%;
+    }
   }
   span {
     float: right;
@@ -197,9 +266,39 @@ body {
 form {
   margin-top: 25px;
 
+  &.approve-request, &.disapprove-request {
+    margin-top: 0;
+  }
+  .subcontrols {
+    margin-top: 35px;
+    padding: 25px 8%;
+    border-top: 1px solid darken(white, 8%);
+
+    .separator {
+      position: static;
+      margin-top: 0;
+
+      .action-button {
+        font-size: 0.6em;
+        margin-top: -5px;
+        margin-left: 15px;
+        padding: 5px 8px;
+      }
+    }
+  }
+  .form-controls {
+    text-align: center;
+    margin-top: 25px;
+
+    *, input[type="submit"] {
+      @include inline-block;
+      margin-top: 0;
+    }
+  }
   .separator {
     font-size: 1.4em;
     color: darken(white, 45%);
+    width: 120%;
     position: relative;
     left: -75px;
     margin-top: 50px;
@@ -243,7 +342,7 @@ form {
     background: white;
     font-family: inherit;
     font-size: inherit;
-    min-width: 200px;
+    min-width: 300px;
     padding: 5px;
     border: none;
 
@@ -266,10 +365,12 @@ form {
   }
   input[type="submit"] {
     @include box-shadow(0 0 0 transparent);
-    background: $color-leaf-green;
+    background: darken($color-leaf-green, 8%);
+    font-weight: 300;
     color: white;
     display: block;
-    margin: 50px auto 0 auto;
+    min-width: 200px;
+    margin: 25px auto 0 auto;
     padding: 15px;
     cursor: pointer;
 

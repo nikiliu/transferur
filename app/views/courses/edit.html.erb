@@ -1,8 +1,12 @@
-<%= render "error_messages" %>
-<%= render "notices" %>
+<div class="breadcrumbs">
+  <%= link_to "Schools & Courses", schools_path %> >
+  <%= link_to @school.name, edit_school_path(@school) %> >
+  <%= link_to @course.name, edit_course_path(@school, @course) %>
+</div><!-- .breadcrumbs -->
 
 <%= form_for @course, url: course_path(@school.id, @course.id) do |f| %>
-  <div class="separator"><span>+</span> Edit Course</div>
+  <%= render "error_messages" %>
+  <div class="separator"><span>+</span> Edit <%= @course.name %></div>
   <div>
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -11,29 +15,45 @@
     <%= f.label :course_num %>
     <%= f.text_field :course_num %>
   </div>
-  <%= f.submit %>
 
-  <div class="separator"><span>+</span> Edit Transfer Requests</div>
-  <ul class="notices">
-    <li><%= link_to "New transfer request",
-                    "/admin/transfer_requests/new?transfer_school_id=#{@school.id}&transfer_course_id=#{@course.id}" %></li>
-  </ul><!-- .notices -->
-  <% if @course.transfer_requests.any? %>
-  <ul class="transfer-requests">
-    <% @course.transfer_requests.each do |request| %>
-    <li>
-      <% ur_course = School.first.courses.find_by(id: request.ur_course_id) %>
-      <%= link_to "Transfer to #{ur_course.full_name}", edit_transfer_request_path(request) %>
-      <span>
-        <%=
-          link_to "Delete",
-          transfer_request_path(request),
-          method: :delete,
-          data: { confirm: "Are you sure you want to delete this transfer request?" }
-        %>
-      </span>
-    </li>
+  <div class="subcontrols">
+    <div class="separator">
+      Edit Transfer Requests
+      <%=
+        link_to "+ New transfer request",
+        "/admin/transfer_requests/new?transfer_school_id=#{@school.id}&transfer_course_id=#{@course.id}",
+        class: "action-button"
+      %>
+    </div><!-- .separator -->
+    <% if @course.transfer_requests.any? %>
+    <ul class="transfer-requests">
+      <% @course.transfer_requests.each do |request| %>
+      <li>
+        <% ur_course = School.first.courses.find_by(id: request.ur_course_id) %>
+        <%= link_to "Transfer to #{ur_course.full_name}", edit_transfer_request_path(request) %>
+        <span>
+          <%=
+            link_to "Delete",
+            transfer_request_path(request),
+            method: :delete,
+            data: { confirm: "Are you sure you want to delete this transfer request?" }
+          %>
+        </span>
+      </li>
+      <% end %>
+    </ul><!-- .transfer-requests -->
     <% end %>
-  </ul><!-- .transfer-requests -->
-  <% end %>
+  </div><!-- .subcontrols -->
+
+
+  <div class="form-controls">
+    <%= f.submit %>
+    <%=
+      link_to "Delete Course",
+      course_path(@school, @course),
+      class: "action-button warning",
+      method: :delete,
+      data: { confirm: "Are you sure?" }
+    %>
+  </div><!-- .form-controls -->
 <% end %>

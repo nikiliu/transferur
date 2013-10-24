@@ -1,6 +1,6 @@
-<ul class="notices">
-  <li><%= link_to "Pending Requests", pending_requests_path %></li>
-</ul><!-- .notices -->
+<div class="breadcrumbs">
+  <%= link_to "Pending Requests", pending_requests_path %>
+</div><!-- .breadcrumbs -->
 
 <% if @requests.count > 0 %>
   <ul class="pending-requests">

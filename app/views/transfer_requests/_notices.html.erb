@@ -1,9 +1,0 @@
-<ul class="notices">
-  <li>
-    <%= link_to "Schools & Courses", schools_path %> >
-    <%= link_to "#{@request.transfer_school.name}", edit_school_path(@request.transfer_school) %> >
-    <%= link_to "#{@request.transfer_course.name}",
-                edit_course_path(@request.transfer_school, @request.transfer_course) %> >
-    Transfer to <%= @request.ur_course.full_name %>
-  </li>
-</ul><!-- .notices -->

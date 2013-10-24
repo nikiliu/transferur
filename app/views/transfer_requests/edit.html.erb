@@ -1,8 +1,19 @@
-<%= render "error_messages" %>
-<%= render "notices" %>
+<div class="breadcrumbs">
+  <%= link_to "Schools & Courses", schools_path %> >
+  <%= link_to "#{@request.transfer_school.name}", edit_school_path(@request.transfer_school) %> >
+  <%= link_to "#{@request.transfer_course.name}",
+              edit_course_path(@request.transfer_school, @request.transfer_course) %> >
+  Transfer to <%= @request.ur_course.full_name %>
+</div><!-- .breadcrumbs -->
 
 <%= form_for @request, url: transfer_request_path(@request) do |f| %>
-  <div class="separator"><span>+</span> Edit Transfer Request</div>
+  <%= render "error_messages" %>
+  <div class="separator">
+    <span>+</span>
+    Edit Transfer Request from
+    <%= @request.transfer_course.course_num %> to
+    <%= @request.ur_course.course_num %>
+  </div><!-- .separator -->
   <div>
     <%= f.label :approved %>
     <%= f.check_box :approved %>
@@ -11,5 +22,15 @@
     <%= f.label :reasons %>
     <%= f.text_field :reasons %>
   </div>
-  <%= f.submit %>
+
+  <div class="form-controls">
+    <%= f.submit "Update Request" %>
+    <%=
+      link_to "Delete Request",
+      transfer_request_path(@request),
+      class: "action-button warning",
+      method: :delete,
+      data: { confirm: "Are you sure?" }
+    %>
+  </div><!-- .form-controls -->
 <% end %>
