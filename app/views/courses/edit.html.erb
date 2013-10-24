@@ -26,7 +26,7 @@
       %>
     </div><!-- .separator -->
     <% if @course.transfer_requests.any? %>
-    <ul class="transfer-requests">
+    <ul class="action-list">
       <% @course.transfer_requests.each do |request| %>
       <li>
         <% ur_course = School.first.courses.find_by(id: request.ur_course_id) %>
@@ -41,7 +41,7 @@
         </span>
       </li>
       <% end %>
-    </ul><!-- .transfer-requests -->
+    </ul><!-- .action-list -->
     <% end %>
   </div><!-- .subcontrols -->
 

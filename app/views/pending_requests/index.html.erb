@@ -3,11 +3,11 @@
 </div><!-- .breadcrumbs -->
 
 <% if @requests.count > 0 %>
-  <ul class="pending-requests">
+  <ul class="action-list">
   <% @requests.each do |request| %>
     <li><%= link_to pending_request_display(request), edit_pending_request_path(request) %></li>
   <% end %>
-  </ul><!-- .pending-requests -->
+  </ul><!-- .action-list -->
 <% else %>
   <p>No pending requests, hooray!</p>
 <% end %>

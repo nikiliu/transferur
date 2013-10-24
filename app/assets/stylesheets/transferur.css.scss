@@ -36,8 +36,13 @@ body {
   width: 700px;
   margin: 0 auto;
 }
+.main {
+  font-size: 1.6em;
+  position: relative;
+  padding: 25px 50px 50px 50px;
+}
 
-// Flash Messages
+// Flash Messages & Devise Errors
 //------------------------------------------------------------------------
 .flash {
   @include border-radius(3px);
@@ -62,9 +67,40 @@ body {
     padding-left: 25px;
   }
 }
+#error_explanation {
+  @extend .notices;
+  background: $color-spider-red;
+  color: white;
+  border: 1px solid darken($color-spider-red, 5%);
 
-// Admin Nav
+  ul {
+    list-style: square;
+  }
+}
+.field_with_errors {
+  display: inline;
+
+  label {
+    color: $color-spider-red;
+  }
+  input {
+    @include box-shadow(0 0 3px $color-spider-red);
+  }
+}
+
+// Header & Admin Nav
 //------------------------------------------------------------------------
+.title {
+  @include border-radius(3px);
+  background: $color-lake-blue;
+  text-align: center;
+  font-weight: 300;
+  font-size: 3.3em;
+  color: lighten($color-lake-blue, 55%);
+  position: relative;
+  z-index: 5;
+  padding: 25px;
+}
 .admin-nav {
   background: lighten($color-lake-blue, 10%);
   font-size: 0;
@@ -91,56 +127,6 @@ body {
   }
 }
 
-// Fold Elements
-//------------------------------------------------------------------------
-.title {
-  @include border-radius(3px);
-  background: $color-lake-blue;
-  text-align: center;
-  font-weight: 300;
-  font-size: 3.3em;
-  color: lighten($color-lake-blue, 55%);
-  position: relative;
-  z-index: 5;
-  padding: 25px;
-}
-.main {
-  font-size: 1.6em;
-  position: relative;
-  padding: 25px 50px 50px 50px;
-}
-.notices {
-  @include border-radius(3px);
-  background: darken(white, 2%);
-  list-style: square;
-  color: darken(white, 45%);
-  padding: 25px 25px 25px 50px;
-  border: 1px solid darken(white, 7%);
-}
-
-// Devise Errors
-//------------------------------------------------------------------------
-#error_explanation {
-  @extend .notices;
-  background: $color-spider-red;
-  color: white;
-  border: 1px solid darken($color-spider-red, 5%);
-
-  ul {
-    list-style: square;
-  }
-}
-.field_with_errors {
-  display: inline;
-
-  label {
-    color: $color-spider-red;
-  }
-  input {
-    @include box-shadow(0 0 3px $color-spider-red);
-  }
-}
-
 // Independent Components
 //------------------------------------------------------------------------
 p {
@@ -149,6 +135,22 @@ p {
 h2 {
   font-size: 1.6em;
   margin-top: 25px;
+}
+.breadcrumbs {
+  @include border-radius(3px);
+  @include box-sizing(border-box);
+  background: darken(white, 3%);
+  font-size: 0.8em;
+  padding: 10px 15px;
+  border: 1px solid darken(white, 7%);
+}
+.notices {
+  @include border-radius(3px);
+  background: darken(white, 2%);
+  list-style: square;
+  color: darken(white, 45%);
+  padding: 25px 25px 25px 50px;
+  border: 1px solid darken(white, 7%);
 }
 .action-button {
   @include inline-block;
@@ -170,39 +172,7 @@ h2 {
     }
   }
 }
-.breadcrumbs {
-  @include border-radius(3px);
-  @include box-sizing(border-box);
-  background: darken(white, 3%);
-  font-size: 0.8em;
-  padding: 10px 15px;
-  border: 1px solid darken(white, 7%);
-}
-.data-list {
-  padding: 15px 25px;
-
-  li {
-    padding: 4px 0;
-    border-top: 1px solid darken(white, 8%);
-
-    &:first-child {
-      border-top: none;
-    }
-  }
-  span {
-    @include inline-block;
-    min-width: 140px;
-
-    &.key {
-      text-align: right;
-      padding-right: 15px;
-    }
-  }
-}
-
-// Schools & Courses
-//------------------------------------------------------------------------
-.schools, .courses, .transfer-requests, .pending-requests {
+.action-list {
   @include border-radius(3px);
   margin-top: 25px;
   border: 1px solid darken(white, 7%);
@@ -257,6 +227,27 @@ h2 {
       float: none;
       width: auto;
       padding: 10px;
+    }
+  }
+}
+.data-list {
+  padding: 15px 25px;
+
+  li {
+    padding: 4px 0;
+    border-top: 1px solid darken(white, 8%);
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+  span {
+    @include inline-block;
+    min-width: 140px;
+
+    &.key {
+      text-align: right;
+      padding-right: 15px;
     }
   }
 }

@@ -25,7 +25,7 @@
       <%= link_to "+ New course", new_course_path(@school), class: "action-button" %>
     </div><!-- .separator -->
     <% if @school.courses.any? %>
-    <ul class="courses">
+    <ul class="action-list">
       <% @school.courses.order(:name).each do |course| %>
       <li>
         <%= link_to course.full_name, edit_course_path(@school, course) %>
@@ -39,7 +39,7 @@
         </span>
       </li>
       <% end %>
-    </ul><!-- .courses -->
+    </ul><!-- .action-list -->
     <% end %>
   </div><!-- .subcontrols -->
 
