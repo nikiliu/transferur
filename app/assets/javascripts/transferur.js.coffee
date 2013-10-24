@@ -47,11 +47,13 @@ $("#pending_request_transfer_course_other").change(() ->
     $(".other-course").hide()
 ).change()
 
-# Ensure reasons input will be passed to "delete" action of
-# pending_requests_controller.
+# Swap forms for approving/disapproving requests
 #------------------------------------------------------------------------
-reasons_base = $(".action-buttons a[data-method='delete']").prop("href")
-$("#reasons").on "input", () ->
-  $(".action-buttons a[data-method='delete']").prop(
-    "href", reasons_base + "/?reasons=" + escape($(this).val())
-  )
+$(".approve-request").hide()
+$("#approve").change () ->
+  if $(this).is(":checked")
+    $(".approve-request").show()
+    $(".disapprove-request").hide()
+  else
+    $(".approve-request").hide()
+    $(".disapprove-request").show()

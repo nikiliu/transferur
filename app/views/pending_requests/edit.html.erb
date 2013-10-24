@@ -25,18 +25,21 @@
   <li><span>UR Course:</span> <%= @request.ur_course.full_name %></li>
 </ul>
 
-<div>
-  <%= label_tag :reasons %>
-  <%= text_field_tag :reasons %>
-</div>
+<%= form_tag do %>
+  <div>
+    <%= label_tag :approve %>
+    <%= check_box_tag :approve %>
+  </div>
+<% end %>
 
-<ul class="action-buttons">
-  <li>
-    <%=
-      link_to "Disapprove",
-      pending_request_path(@request),
-      method: :delete,
-      data: { confirm: "Are you sure you want to disapprove this request?" }
-    %>
-  </li>
-</ul><!-- .action-buttons -->
+<%= form_tag pending_request_path(@request), method: :patch, class: "approve-request" do %>
+  <%= submit_tag "Approve", data: { confirm: "Are you sure?" } %>
+<% end %>
+
+<%= form_tag "/admin/pending_requests/delete/#{@request.id}", class: "disapprove-request" do %>
+  <div>
+    <%= label_tag :reasons %>
+    <%= text_field_tag :reasons %>
+  </div>
+  <%= submit_tag "Disapprove", data: { confirm: "Are you sure?" } %>
+<% end %>

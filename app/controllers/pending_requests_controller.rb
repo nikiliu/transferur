@@ -64,6 +64,62 @@ class PendingRequestsController < ApplicationController
   end
 
   def update
+    @request = PendingRequest.find_by(id: params[:id])
+
+    # Hashes used to search for existing schools/courses
+    school_params = {
+      name:          @request.transfer_school_name,
+      location:      @request.transfer_school_location,
+      international: @request.transfer_school_international
+    }
+    course_params = {
+      name:          @request.transfer_course_name,
+      course_num:    @request.transfer_course_num
+    }
+
+    # Create other transfer school if it does not exist
+    transfer_school = nil
+    if @request.transfer_school_other
+      transfer_school = School.find_by(school_params)
+      if transfer_school.nil?
+        transfer_school = School.create!(school_params)
+      end
+    else
+      # Not other transfer school, look up existing school
+      transfer_school = School.find_by(id: @request.transfer_school_id)
+    end
+
+    # Create other transfer course if it does not exist
+    transfer_course = nil
+    if @request.transfer_course_other
+      transfer_course = transfer_school.courses.find_by(course_params)
+      if transfer_course.nil?
+        transfer_course = transfer_school.courses.create!(course_params)
+      end
+    else
+      # Not other transfer course, look up existing course
+      transfer_course = transfer_school.courses.find_by(id: @request.transfer_course_id)
+    end
+
+    # Create new transfer request
+    TransferRequest.create!(transfer_school_id: transfer_school.id,
+                            transfer_course_id: transfer_course.id,
+                            ur_course_id:       @request.ur_course_id,
+                            approved: true)
+
+    email_params = { pending_request: {} }
+    @request.attribute_names.each do |attr|
+      email_params[:pending_request][attr.to_sym] = @request.read_attribute(attr)
+    end
+    @request.destroy!
+
+    ResultsMailer.result_email(email_params, {
+      approved: true,
+      reasons:  ""
+    }).deliver
+
+    flash[:success] = "Pending request approved."
+    redirect_to pending_requests_path
   end
 
   def destroy
