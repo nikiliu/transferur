@@ -4,24 +4,22 @@
 
 <h2>Pending Transfer Request Details</h2>
 <ul>
-  <li><%= @request.requester_name %></li>
-  <li><%= @request.requester_email %></li>
+  <li>Requester name: <%= @request.requester_name %></li>
+  <li>Requester email: <%= @request.requester_email %></li>
 
   <% if @request.transfer_school_other %>
-    <li><%= @request.transfer_school_name %></li>
-    <li><%= @request.transfer_school_location %></li>
-    <li><%= @request.transfer_school_international %></li>
+    <li><span>Transfer School:</span> <%= @request.transfer_school_name %> (<%= @request.transfer_school_location %>)</li>
+    <li><span>International:</span> <%= @request.transfer_school_international %></li>
   <% else %>
-    <li><%= @request.transfer_school.name %></li>
+    <li><span>Transfer School:</span> <%= @request.transfer_school.name %></li>
   <% end %>
 
   <% if @request.transfer_course_other %>
-    <li><%= @request.transfer_course_name %></li>
-    <li><%= @request.transfer_course_num %></li>
-    <li><%= @request.transfer_course_url %></li>
+    <li><span>Transfer Course:</span> <%= @request.transfer_course_name %> (<%= @request.transfer_course_num %>)</li>
+    <li><span>Course URL:</span> <%= @request.transfer_course_url %></li>
   <% else %>
-    <li><%= @request.transfer_course.full_name %></li>
+    <li><span>Transfer Course:</span> <%= @request.transfer_course.full_name %></li>
   <% end %>
 
-  <li><%= @request.ur_course.full_name %></li>
+  <li><span>UR Course:</span> <%= @request.ur_course.full_name %></li>
 </ul>

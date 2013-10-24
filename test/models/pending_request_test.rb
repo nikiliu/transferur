@@ -9,6 +9,7 @@ class PendingRequestTest < ActiveSupport::TestCase
       transfer_course_id: 1,
       transfer_school_other: false,
       transfer_course_other: false,
+      dual_enrollment: false,
       ur_course_id: 1
     )
     @pending_request_2 = PendingRequest.new(
@@ -20,6 +21,7 @@ class PendingRequestTest < ActiveSupport::TestCase
       transfer_course_name: "Foo Class",
       transfer_course_num: "Foo 101",
       transfer_course_url: "http://foo.com/",
+      dual_enrollment: false,
       ur_course_id: 1
     )
     @pending_request_3 = PendingRequest.new(
@@ -33,6 +35,7 @@ class PendingRequestTest < ActiveSupport::TestCase
       transfer_course_name: "Foo Class",
       transfer_course_num: "Foo 101",
       transfer_course_url: "http://foo.com/",
+      dual_enrollment: false,
       ur_course_id: 1
     )
   end

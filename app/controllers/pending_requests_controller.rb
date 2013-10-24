@@ -24,7 +24,7 @@ class PendingRequestsController < ApplicationController
         }).deliver
       else
         query = TransferRequest.find_by(query_params)
-        if !query.nil? and query.updated_at >= 5.years.ago and params[:dual_enrollment] != "1"
+        if !query.nil? and query.updated_at >= 5.years.ago and params[:pending_request][:dual_enrollment] != "1"
           # TransferRequest object found in database, it was updated within 5 years, and this
           # is not a dual enrollment request.
           flash[:success] = success_message
@@ -83,6 +83,7 @@ class PendingRequestsController < ApplicationController
         :transfer_course_name,
         :transfer_course_num,
         :transfer_course_url,
+        :dual_enrollment,
         :ur_course_id
       )
     end

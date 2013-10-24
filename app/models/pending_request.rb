@@ -14,6 +14,8 @@ class PendingRequest < ActiveRecord::Base
   validates :transfer_course_num,   presence: true, if: :transfer_course_other?
   validates :transfer_course_url,   presence: true, if: :transfer_course_other?
 
+  validates :dual_enrollment, inclusion: { in: [true, false] }
+
   validates :ur_course_id, presence: true
 
   # Returns School based on transfer_school_id
