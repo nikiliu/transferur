@@ -16,7 +16,9 @@ class PendingRequestsController < ApplicationController
     # Validate form input
     if @request.valid?
       if params[:online] == "1"
-        # Cannot approve online course requests
+        #----------------------------------------------------------------
+        # Case 1. Cannot approve online course requests
+        #----------------------------------------------------------------
         flash[:success] = success_message
         ResultsMailer.result_email(params, {
           approved: false,
@@ -28,14 +30,18 @@ class PendingRequestsController < ApplicationController
            params[:pending_request][:dual_enrollment] != "1" and
            params[:pending_request][:transfer_school_other] != "1" and
            params[:pending_request][:transfer_course_other] != "1"
-          # TransferRequest object found in database
+          #--------------------------------------------------------------
+          # Case 2. Valid transfer request exists
+          #--------------------------------------------------------------
           flash[:success] = success_message
           ResultsMailer.result_email(params, {
             approved: query.approved,
             reasons:  query.reasons
           }).deliver
         else
-          # Create new PendingRequest
+          #--------------------------------------------------------------
+          # Case 3. Create new pending request
+          #--------------------------------------------------------------
           @request.save
           flash[:pending] = pending_message
           AdminMailer.pending_request_notification.deliver
@@ -43,7 +49,9 @@ class PendingRequestsController < ApplicationController
       end
       redirect_to root_path
     else
-      # Invalid form input, display errors
+      #------------------------------------------------------------------
+      # Case 4. Invalid form input
+      #------------------------------------------------------------------
       render "new"
     end
   end
@@ -53,6 +61,10 @@ class PendingRequestsController < ApplicationController
     @transfer_courses = School.find_by(id: params[:school_id]).courses
     render partial: "transfer_courses_options"
   end
+
+  #----------------------------------------------------------------------
+  # START ADMIN ACTIONS
+  #----------------------------------------------------------------------
 
   def index
     @title    = "Pending Requests"
@@ -66,7 +78,9 @@ class PendingRequestsController < ApplicationController
   def update
     @request = PendingRequest.find_by(id: params[:id])
 
-    # Hashes used to search for existing schools/courses
+    #--------------------------------------------------------------------
+    # Step 0. Set up hashes used to search for existing schools/courses
+    #--------------------------------------------------------------------
     school_params = {
       name:          @request.transfer_school_name,
       location:      @request.transfer_school_location,
@@ -77,7 +91,9 @@ class PendingRequestsController < ApplicationController
       course_num:    @request.transfer_course_num
     }
 
-    # Create other transfer school if it does not exist
+    #--------------------------------------------------------------------
+    # Step 1. Ensure transfer school in database (create if not)
+    #--------------------------------------------------------------------
     transfer_school = nil
     if @request.transfer_school_other
       transfer_school = School.find_by(school_params)
@@ -89,7 +105,9 @@ class PendingRequestsController < ApplicationController
       transfer_school = School.find_by(id: @request.transfer_school_id)
     end
 
-    # Create other transfer course if it does not exist
+    #--------------------------------------------------------------------
+    # Step 2. Ensure transfer course in database (create if not)
+    #--------------------------------------------------------------------
     transfer_course = nil
     if @request.transfer_course_other
       transfer_course = transfer_school.courses.find_by(course_params)
@@ -101,43 +119,47 @@ class PendingRequestsController < ApplicationController
       transfer_course = transfer_school.courses.find_by(id: @request.transfer_course_id)
     end
 
-    # Create new transfer request
+    #--------------------------------------------------------------------
+    # Step 3. Create new transfer request
+    #--------------------------------------------------------------------
     TransferRequest.create!(transfer_school_id: transfer_school.id,
                             transfer_course_id: transfer_course.id,
                             ur_course_id:       @request.ur_course_id,
                             approved: true)
 
+    #--------------------------------------------------------------------
+    # Step 4. Send notification email to requester
+    #--------------------------------------------------------------------
     email_params = { pending_request: {} }
-    @request.attribute_names.each do |attr|
-      email_params[:pending_request][attr.to_sym] = @request.read_attribute(attr)
-    end
-    @request.destroy!
-
+    attr_to_hash(@request, email_params[:pending_request])
     ResultsMailer.result_email(email_params, {
       approved: true,
       reasons:  ""
     }).deliver
 
+    @request.destroy!
     flash[:success] = "Pending request approved."
     redirect_to pending_requests_path
   end
 
   def destroy
-    email_params = { pending_request: {} }
-    @request     = PendingRequest.find_by(id: params[:id])
-    @request.attribute_names.each do |attr|
-      email_params[:pending_request][attr.to_sym] = @request.read_attribute(attr)
-    end
-    @request.destroy!
+    @request = PendingRequest.find_by(id: params[:id])
 
+    email_params = { pending_request: {} }
+    attr_to_hash(@request, email_params[:pending_request])
     ResultsMailer.result_email(email_params, {
       approved: false,
       reasons:  params[:reasons]
     }).deliver
 
+    @request.destroy!
     flash[:success] = "Pending request disapproved."
     redirect_to pending_requests_path
   end
+
+  #----------------------------------------------------------------------
+  # END ADMIN ACTIONS
+  #----------------------------------------------------------------------
 
   private
 
@@ -172,5 +194,12 @@ class PendingRequestsController < ApplicationController
     def schools_and_courses
       @transfer_schools = School.where.not(id: 1).order(:name)
       @ur_courses       = School.first.courses
+    end
+
+    # Creates key/value pairs out of given object's attributes
+    def attr_to_hash(obj, hash)
+      obj.attribute_names.each do |attr|
+        hash[attr.to_sym] = obj.read_attribute(attr)
+      end
     end
 end

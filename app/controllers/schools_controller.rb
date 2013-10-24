@@ -39,8 +39,8 @@ class SchoolsController < ApplicationController
   end
 
   def destroy
-    @school = School.find_by(id: params[:id])
-    @school.destroy!
+    school = School.find_by(id: params[:id])
+    school.destroy!
     flash[:success] = "School successfully deleted."
     redirect_to schools_path
   end

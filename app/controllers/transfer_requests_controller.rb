@@ -39,10 +39,10 @@ class TransferRequestsController < ApplicationController
   end
 
   def destroy
-    @request        = TransferRequest.find_by(id: params[:id])
-    transfer_school = @request.transfer_school
-    transfer_course = @request.transfer_course
-    @request.destroy!
+    request         = TransferRequest.find_by(id: params[:id])
+    transfer_school = request.transfer_school
+    transfer_course = request.transfer_course
+    request.destroy!
     flash[:success] = "Transfer request successfully deleted."
     redirect_to edit_course_path(transfer_school, transfer_course)
   end
@@ -50,10 +50,12 @@ class TransferRequestsController < ApplicationController
   private
 
     def protected_params
-      params.require(:transfer_request).permit(:transfer_school_id,
-                                               :transfer_course_id,
-                                               :ur_course_id,
-                                               :approved,
-                                               :reasons)
+      params.require(:transfer_request).permit(
+        :transfer_school_id,
+        :transfer_course_id,
+        :ur_course_id,
+        :approved,
+        :reasons
+      )
     end
 end

@@ -38,11 +38,11 @@ class CoursesController < ApplicationController
   end
 
   def destroy
-    @school = School.find_by(id: params[:school_id])
-    @course = @school.courses.find_by(id: params[:id])
-    @course.destroy!
+    school = School.find_by(id: params[:school_id])
+    course = school.courses.find_by(id: params[:id])
+    course.destroy!
     flash[:success] = "Course successfully deleted."
-    redirect_to edit_school_path(@school)
+    redirect_to edit_school_path(school)
   end
 
   private
