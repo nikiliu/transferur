@@ -46,3 +46,12 @@ $("#pending_request_transfer_course_other").change(() ->
     $("#pending_request_transfer_course_id").prop("disabled", false)
     $(".other-course").hide()
 ).change()
+
+# Ensure reasons input will be passed to "delete" action of
+# pending_requests_controller.
+#------------------------------------------------------------------------
+reasons_base = $(".action-buttons a[data-method='delete']").prop("href")
+$("#reasons").on "input", () ->
+  $(".action-buttons a[data-method='delete']").prop(
+    "href", reasons_base + "/?reasons=" + escape($(this).val())
+  )

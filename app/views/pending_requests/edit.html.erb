@@ -16,10 +16,27 @@
 
   <% if @request.transfer_course_other %>
     <li><span>Transfer Course:</span> <%= @request.transfer_course_name %> (<%= @request.transfer_course_num %>)</li>
-    <li><span>Course URL:</span> <%= @request.transfer_course_url %></li>
+    <li><span>Course URL:</span> <%= link_to @request.transfer_course_url, @request.transfer_course_url %></li>
   <% else %>
     <li><span>Transfer Course:</span> <%= @request.transfer_course.full_name %></li>
   <% end %>
+  <li><span>Dual enrollment:</span> <%= @request.dual_enrollment %></li>
 
   <li><span>UR Course:</span> <%= @request.ur_course.full_name %></li>
 </ul>
+
+<div>
+  <%= label_tag :reasons %>
+  <%= text_field_tag :reasons %>
+</div>
+
+<ul class="action-buttons">
+  <li>
+    <%=
+      link_to "Disapprove",
+      pending_request_path(@request),
+      method: :delete,
+      data: { confirm: "Are you sure you want to disapprove this request?" }
+    %>
+  </li>
+</ul><!-- .action-buttons -->

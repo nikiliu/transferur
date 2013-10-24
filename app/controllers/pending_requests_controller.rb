@@ -24,9 +24,11 @@ class PendingRequestsController < ApplicationController
         }).deliver
       else
         query = TransferRequest.find_by(query_params)
-        if !query.nil? and query.updated_at >= 5.years.ago and params[:pending_request][:dual_enrollment] != "1"
-          # TransferRequest object found in database, it was updated within 5 years, and this
-          # is not a dual enrollment request.
+        if !query.nil? and query.updated_at >= 5.years.ago and
+           params[:pending_request][:dual_enrollment] != "1" and
+           params[:pending_request][:transfer_school_other] != "1" and
+           params[:pending_request][:transfer_course_other] != "1"
+          # TransferRequest object found in database
           flash[:success] = success_message
           ResultsMailer.result_email(params, {
             approved: query.approved,
@@ -34,7 +36,7 @@ class PendingRequestsController < ApplicationController
           }).deliver
         else
           # Create new PendingRequest
-          # @request.save
+          @request.save
           flash[:pending] = pending_message
           AdminMailer.pending_request_notification.deliver
         end
@@ -65,6 +67,20 @@ class PendingRequestsController < ApplicationController
   end
 
   def destroy
+    email_params = { pending_request: {} }
+    @request     = PendingRequest.find_by(id: params[:id])
+    @request.attribute_names.each do |attr|
+      email_params[:pending_request][attr.to_sym] = @request.read_attribute(attr)
+    end
+    @request.destroy!
+
+    ResultsMailer.result_email(email_params, {
+      approved: false,
+      reasons:  params[:reasons]
+    }).deliver
+
+    flash[:success] = "Pending request disapproved."
+    redirect_to pending_requests_path
   end
 
   private
