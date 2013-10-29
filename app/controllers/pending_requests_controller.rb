@@ -137,7 +137,8 @@ class PendingRequestsController < ApplicationController
         transfer_school_id: transfer_school.id,
         transfer_course_id: transfer_course.id,
         ur_course_id:       @request.ur_course_id,
-        approved:           approved
+        approved:           approved,
+        reasons:            reasons
       )
     else
       transfer_request.update_attributes(approved: approved, reasons: reasons)
@@ -150,7 +151,8 @@ class PendingRequestsController < ApplicationController
     attr_to_hash(@request, email_params[:pending_request])
     ResultsMailer.result_email(email_params, {
       approved: approved,
-      reasons:  reasons
+      reasons:  reasons,
+      cc_admin: true
     }).deliver
 
     @request.destroy!

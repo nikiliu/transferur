@@ -14,6 +14,11 @@ class ResultsMailer < ActionMailer::Base
     @dual_enrollment = (@request[:dual_enrollment]       == "1" or @request[:dual_enrollment]       == true)
 
     # Return mail object
-    mail(to: @request[:requester_email], subject: "UR Math Course Transfer Request")
+    mail_hash = { to: @request[:requester_email], subject: "UR Math Course Transfer Request" }
+    if @options[:cc_admin] == true
+      admin          = User.first
+      mail_hash[:cc] = admin.email
+    end
+    mail(mail_hash)
   end
 end
