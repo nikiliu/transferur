@@ -196,7 +196,7 @@ class PendingRequestsController < ApplicationController
     # Sets instance variables for "new" and "create"
     def schools_and_courses
       @transfer_schools = School.where.not(id: 1).order(:name)
-      @ur_courses       = School.first.courses
+      @ur_courses       = School.first.courses.order(:course_num)
     end
 
     # Creates key/value pairs out of given object's attributes

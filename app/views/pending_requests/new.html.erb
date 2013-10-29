@@ -79,7 +79,7 @@
   <div class="separator"><span>3</span> UR course</div>
   <div>
     <%= f.label :ur_course_id, "UR course" %>
-    <%= f.select :ur_course_id, options_from_collection_for_select(@ur_courses, :id, :full_name) %>
+    <%= f.select :ur_course_id, options_from_collection_for_select(@ur_courses, :id, :full_name_course_num) %>
   </div>
 
   <%= f.submit "Submit" %>
