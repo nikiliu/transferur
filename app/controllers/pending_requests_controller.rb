@@ -1,6 +1,6 @@
 class PendingRequestsController < ApplicationController
   before_filter :schools_and_courses, only: [:new, :create]
-  before_filter :authenticate_user!,  only: [:index, :edit, :update, :destroy]
+  before_filter :authenticate_user!,  only: [:index, :edit, :update]
   before_filter :set_body_class
 
   def new
@@ -80,10 +80,8 @@ class PendingRequestsController < ApplicationController
 
   def update
     @request = PendingRequest.find_by(id: params[:id])
-
-    #--------------------------------------------------------------------
-    # Step 0. Set up hashes used to search for existing schools/courses
-    #--------------------------------------------------------------------
+    approved = params[:approved] == "1"
+    reasons  = params[:reasons]
     school_params = {
       name:          @request.transfer_school_name,
       location:      @request.transfer_school_location,
@@ -123,40 +121,41 @@ class PendingRequestsController < ApplicationController
     end
 
     #--------------------------------------------------------------------
-    # Step 3. Create new transfer request
+    # Step 3. Check for an existing transfer request
     #--------------------------------------------------------------------
-    TransferRequest.create!(transfer_school_id: transfer_school.id,
-                            transfer_course_id: transfer_course.id,
-                            ur_course_id:       @request.ur_course_id,
-                            approved: true)
+    transfer_request = TransferRequest.find_by(
+      transfer_school_id: transfer_school.id,
+      transfer_course_id: transfer_course.id,
+      ur_course_id:       @request.ur_course_id
+    )
 
     #--------------------------------------------------------------------
-    # Step 4. Send notification email to requester
+    # Step 4. Create new transfer request or update existing one
+    #--------------------------------------------------------------------
+    if transfer_request.nil?
+      TransferRequest.create!(
+        transfer_school_id: transfer_school.id,
+        transfer_course_id: transfer_course.id,
+        ur_course_id:       @request.ur_course_id,
+        approved:           approved
+      )
+    else
+      transfer_request.update_attributes(approved: approved, reasons: reasons)
+    end
+
+    #--------------------------------------------------------------------
+    # Step 5. Send notification email to requester
     #--------------------------------------------------------------------
     email_params = { pending_request: {} }
     attr_to_hash(@request, email_params[:pending_request])
     ResultsMailer.result_email(email_params, {
-      approved: true,
-      reasons:  ""
+      approved: approved,
+      reasons:  reasons
     }).deliver
 
     @request.destroy!
     flash[:success] = "Pending request approved."
-    redirect_to pending_requests_path
-  end
-
-  def destroy
-    @request = PendingRequest.find_by(id: params[:id])
-
-    email_params = { pending_request: {} }
-    attr_to_hash(@request, email_params[:pending_request])
-    ResultsMailer.result_email(email_params, {
-      approved: false,
-      reasons:  params[:reasons]
-    }).deliver
-
-    @request.destroy!
-    flash[:success] = "Pending request disapproved."
+    flash[:success] = "Pending request disapproved." if !approved
     redirect_to pending_requests_path
   end
 

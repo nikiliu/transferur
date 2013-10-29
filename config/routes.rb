@@ -3,7 +3,6 @@ Transferur::Application.routes.draw do
 
   match "/",                                  to: "pending_requests#create",                  via: "post"
   match "/update_transfer_courses",           to: "pending_requests#update_transfer_courses", via: "get"
-  match "/admin/pending_requests/delete/:id", to: "pending_requests#destroy",                 via: "post"
 
   resources :schools,           path: "admin/schools/",                    only: [:index, :new, :create, :edit, :update, :destroy]
   resources :courses,           path: "admin/schools/:school_id/courses/", only: [:new, :create, :edit, :update, :destroy]

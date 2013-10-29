@@ -47,13 +47,9 @@ $("#pending_request_transfer_course_other").change(() ->
     $(".other-course").hide()
 ).change()
 
-# Swap forms for approving/disapproving requests
+# Require reasons input when approving/disapproving pending requests
 #------------------------------------------------------------------------
-$(".approve-request").hide()
-$("#approve").change () ->
-  if $(this).is(":checked")
-    $(".approve-request").show()
-    $(".disapprove-request").hide()
-  else
-    $(".approve-request").hide()
-    $(".disapprove-request").show()
+$(".pending-submit").click () ->
+  if !$("#approved").is(":checked") and $("#reasons").val().trim().length == 0
+    alert "Please fill out the reasons."
+    return false
