@@ -49,6 +49,10 @@
       <%= f.select :transfer_course_id, "<option>Please enable JavaScript</option>".html_safe %>
     </div><!-- .transfer-course-select -->
     <div>
+        <%= f.label :transfer_course_url, "Catalog URL" %>
+        <%= f.url_field :transfer_course_url %>
+    </div>
+    <div>
       <%= f.label :transfer_course_other, "Other course" %>
       <%= f.check_box :transfer_course_other %>
     </div>
@@ -60,10 +64,6 @@
       <div>
         <%= f.label :transfer_course_num, "Course number" %>
         <%= f.text_field :transfer_course_num %>
-      </div>
-      <div>
-        <%= f.label :transfer_course_url, "Catalog URL" %>
-        <%= f.url_field :transfer_course_url %>
       </div>
     </div><!-- .other-course -->
     <div>

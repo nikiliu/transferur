@@ -9,6 +9,7 @@ class PendingRequestTest < ActiveSupport::TestCase
       transfer_course_id: 1,
       transfer_school_other: false,
       transfer_course_other: false,
+      transfer_course_url: "http://foo.com/",
       dual_enrollment: false,
       ur_course_id: 1
     )
