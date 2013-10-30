@@ -1,0 +1,20 @@
+//========================================================================
+// ie.css.scss
+//========================================================================
+
+.lt-ie9 {
+  .admin-nav {
+    a {
+      font-size: 14px;          // No rem support in <= IE8
+    }
+  }
+  form {
+    input {
+      border: 1px solid #ddd;   // No box-shadow support in <= IE8
+
+      &[type="checkbox"], &[type="radio"] {
+        border: none;
+      }
+    }
+  }
+}
