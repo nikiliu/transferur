@@ -348,6 +348,9 @@ form {
       @include box-shadow(0 0 6px lighten($color-lake-blue, 15%));
       outline: none;
     }
+    &[type="radio"] {
+      @include box-shadow(none);
+    }
   }
   input[type="checkbox"] {
     @include box-shadow(none);
