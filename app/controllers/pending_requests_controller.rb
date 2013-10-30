@@ -1,6 +1,6 @@
 class PendingRequestsController < ApplicationController
   before_filter :schools_and_courses, only: [:new, :create]
-  before_filter :authenticate_user!,  only: [:index, :edit, :update]
+  before_filter :authenticate_user!,  only: [:index, :edit, :update, :destroy]
   before_filter :set_body_class
 
   def new
@@ -158,6 +158,13 @@ class PendingRequestsController < ApplicationController
     @request.destroy!
     flash[:success] = "Pending request approved."
     flash[:success] = "Pending request disapproved." if !approved
+    redirect_to pending_requests_path
+  end
+
+  def destroy
+    @request = PendingRequest.find_by(id: params[:id])
+    @request.destroy!
+    flash[:success] = "Pending request successfully deleted."
     redirect_to pending_requests_path
   end
 

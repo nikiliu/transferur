@@ -7,7 +7,7 @@ Transferur::Application.routes.draw do
   resources :schools,           path: "admin/schools/",                    only: [:index, :new, :create, :edit, :update, :destroy]
   resources :courses,           path: "admin/schools/:school_id/courses/", only: [:new, :create, :edit, :update, :destroy]
   resources :transfer_requests, path: "admin/transfer_requests/",          only: [:new, :create, :edit, :update, :destroy]
-  resources :pending_requests,  path: "admin/pending_requests/",           only: [:index, :edit, :update]
+  resources :pending_requests,  path: "admin/pending_requests/",           only: [:index, :edit, :update, :destroy]
 
   devise_for :users, path: "", path_names: { sign_in: "login", sign_out: "logout" }, skip: :registrations
   as :user do

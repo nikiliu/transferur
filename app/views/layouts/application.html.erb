@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1.0" />
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <!--[if IE]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,6 +22,5 @@
   </div><!-- .main -->
 </div><!-- .wrapper -->
 
-<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 </body>
 </html>

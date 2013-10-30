@@ -5,7 +5,17 @@
 <% if @requests.count > 0 %>
   <ul class="action-list">
   <% @requests.each do |request| %>
-    <li><%= link_to pending_request_display(request), edit_pending_request_path(request) %></li>
+    <li>
+      <%= link_to pending_request_display(request), edit_pending_request_path(request) %>
+      <span>
+        <%=
+          link_to "Delete",
+          pending_request_path(request),
+          method: :delete,
+          data: { confirm: "Are you sure?" }
+        %>
+      </span>
+    </li>
   <% end %>
   </ul><!-- .action-list -->
 <% else %>
