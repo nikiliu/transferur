@@ -3,11 +3,11 @@ Hello <%= @request[:requester_name] %>. You have recently submitted a UR Math Co
 ==================================================================================
 <% if @other_school %>
 Transfer school: <%= @request[:transfer_school_name] %> (<%= @request[:transfer_school_location] %>)
-  International: <%= @request[:transfer_school_international] == "1" %>
+International: <%= @request[:transfer_school_international] == "1" %>
 <% else %>
 <% transfer_school = School.find_by(id: @request[:transfer_school_id]) %>
 Transfer school: <%= transfer_school.name %> (<%= transfer_school.location %>)
-  International: <%= transfer_school.international %>
+International: <%= transfer_school.international %>
 <% end %>
 <% if @other_course %>
 Transfer course: <%= @request[:transfer_course_name] %> (<%= @request[:transfer_course_num] %>)
@@ -16,9 +16,9 @@ Transfer course: <%= @request[:transfer_course_name] %> (<%= @request[:transfer_
 Transfer course: <%= transfer_course.name %> (<%= transfer_course.course_num %>)
 <% end %>
 Dual enrollment: <%= @dual_enrollment %>
-         Online: <%= @online %>
+Online: <%= @online %>
 <% ur_course = School.first.courses.find_by(id: @request[:ur_course_id]) %>
-      UR course: <%= ur_course.name %> (<%= ur_course.course_num %>)
+UR course: <%= ur_course.name %> (<%= ur_course.course_num %>)
 ==================================================================================
 
 <% if @options[:approved] %>
