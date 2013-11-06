@@ -16,8 +16,11 @@ update_transfer_courses = (school_id) ->
 # Fires ajax function when a transfer school is selected
 #------------------------------------------------------------------------
 $("#pending_request_transfer_school_id").change(() ->
-  update_transfer_courses($(this).val())
-).change()
+  if $(this).val() < 0
+    $("#pending_request_transfer_course_id").html("<option value='-1'>(Select a school first)</option>")
+  else
+    update_transfer_courses($(this).val())
+)
 
 # Swap input for other transfer school
 #------------------------------------------------------------------------

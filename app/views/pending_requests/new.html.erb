@@ -23,11 +23,11 @@
   <div class="separator"><span>2</span> Transfer school &amp; course</div>
   <div class="transfer-school">
     <%= f.label :transfer_school_id %>
-    <%= f.select :transfer_school_id, options_from_collection_for_select(@transfer_schools, :id, :name) %>
+    <%= f.select :transfer_school_id, content_tag(:option, "(Select your school)", value: -1) + options_from_collection_for_select(@transfer_schools, :id, :name) %>
   </div><!-- .transfer-school -->
   <div>
     <%= f.label :transfer_school_other, "Other school" %>
-    <%= f.check_box :transfer_school_other %>
+    <%= f.check_box :transfer_school_other %> (check if your school is not listed)
   </div>
   <div class="other-school">
     <div>
@@ -46,7 +46,7 @@
   <div class="transfer-course">
     <div class="transfer-course-select">
       <%= f.label :transfer_course_id %>
-      <%= f.select :transfer_course_id, "<option>Please enable JavaScript</option>".html_safe %>
+      <%= f.select :transfer_course_id, content_tag(:option, "(Select a school first)", value: -1) %>
     </div><!-- .transfer-course-select -->
     <div>
         <%= f.label :transfer_course_url, "Catalog URL" %>
@@ -68,11 +68,12 @@
     </div><!-- .other-course -->
     <div>
       <%= label_tag :online %>
-      <%= check_box_tag :online %>
+      No  <%= radio_button_tag :online, "0", true %>
+      Yes <%= radio_button_tag :online, "1" %>
     </div>
     <div>
       <%= f.label :dual_enrollment %>
-      No  <%= f.radio_button :dual_enrollment, "0" %>
+      No  <%= f.radio_button :dual_enrollment, "0", { checked: true } %>
       Yes <%= f.radio_button :dual_enrollment, "1" %>
     </div>
   </div><!-- .transfer-course -->

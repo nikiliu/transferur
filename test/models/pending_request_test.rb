@@ -114,4 +114,14 @@ class PendingRequestTest < ActiveSupport::TestCase
     @pending_request_2.transfer_course_url = ""
     assert !@pending_request_2.valid?
   end
+
+  test "unselected school" do
+    @pending_request_1.transfer_school_id = "-1"
+    assert !@pending_request_1.valid?
+  end
+
+  test "unselected course" do
+    @pending_request_1.transfer_course_id = "-1"
+    assert !@pending_request_1.valid?
+  end
 end
