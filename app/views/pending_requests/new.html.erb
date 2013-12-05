@@ -24,6 +24,7 @@
   <div class="transfer-school">
     <%= f.label :transfer_school_id %>
     <%= f.select :transfer_school_id, content_tag(:option, "(Select your school)", value: -1) + options_from_collection_for_select(@transfer_schools, :id, :name) %>
+    <div class="prompt">Don't see your school?<br />Check the "Other School" checkbox.</div>
   </div><!-- .transfer-school -->
   <div>
     <%= f.label :transfer_school_other, "Other school" %>
@@ -47,6 +48,7 @@
     <div class="transfer-course-select">
       <%= f.label :transfer_course_id %>
       <%= f.select :transfer_course_id, content_tag(:option, "(Select a school first)", value: -1) %>
+      <div class="prompt course">Don't see your course?<br />Check the "Other Course" checkbox.</div>
     </div><!-- .transfer-course-select -->
     <div>
         <%= f.label :transfer_course_url, "Catalog URL" %>
@@ -81,8 +83,11 @@
   <div class="separator"><span>3</span> UR course</div>
   <div>
     <%= f.label :ur_course_id, "UR course" %>
-    <%= f.select :ur_course_id, options_from_collection_for_select(@ur_courses, :id, :full_name_course_num) %>
+    <%= f.select :ur_course_id, content_tag(:option, "(Select equivalent UR course)", value: -1) + options_from_collection_for_select(@ur_courses, :id, :full_name_course_num) %>
   </div>
 
-  <%= f.submit "Submit" %>
+  <div class="form-actions">
+    <%= f.submit "Submit", class: "inline-block" %>
+    <%= link_to "Clear form", "#", class: "action-button warning clear-form" %>
+  </div><!-- .form-actions -->
 <% end %>

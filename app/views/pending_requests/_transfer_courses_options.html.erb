@@ -1,1 +1,1 @@
-<%= options_from_collection_for_select(@transfer_courses, :id, :full_name_course_num) %>
+<%= content_tag(:option, "(Select your course)", value: -1) + options_from_collection_for_select(@transfer_courses, :id, :full_name_course_num) %>

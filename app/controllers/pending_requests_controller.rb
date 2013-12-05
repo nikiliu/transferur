@@ -76,6 +76,22 @@ class PendingRequestsController < ApplicationController
 
   def edit
     @request = PendingRequest.find_by(id: params[:id])
+
+    # Retrieve previous transfer request if it was an old one
+    if !@request.transfer_school_other && !@request.transfer_course_other
+      @prev_request = TransferRequest.find_by(
+        transfer_school_id: @request.transfer_school_id,
+        transfer_course_id: @request.transfer_course_id,
+        ur_course_id:       @request.ur_course_id
+      )
+
+      # Collect all previously approved requests with this course
+      @prev_requests = TransferRequest.where(
+        transfer_school_id: @request.transfer_school_id,
+        transfer_course_id: @request.transfer_course_id,
+        approved:           true
+      )
+    end
   end
 
   def update

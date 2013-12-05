@@ -62,6 +62,10 @@ body {
     background: $color-spider-red;
     border: 1px solid darken($color-spider-red, 5%);
   }
+  &.mini {
+    margin: 15px 25px 0 25px;
+    padding: 10px 15px;
+  }
   ul {
     list-style: square;
     padding-left: 25px;
@@ -177,6 +181,10 @@ h2 {
     &:hover {
       background: lighten($color-spider-red, 10%);
     }
+  }
+  &.clear-form {
+    padding-bottom: 14px;
+    margin-top: 25px;
   }
 }
 .action-list {
@@ -326,6 +334,50 @@ form {
       border-top: 1px solid darken(white, 10%);
     }
   }
+  .transfer-school, .transfer-course {
+    position: relative;
+
+    select:focus + .prompt {
+      @include opacity(1);
+      right: -170px;
+    }
+    .prompt {
+      @include transition(0.2s ease-in-out);
+      @include opacity(0);
+      @include border-radius(10px);
+      background: rgba(0, 0, 0, 0.5);
+      font-size: 0.8em;
+      color: white;
+      position: absolute;
+      top: -21px;
+      right: -150px;
+      padding: 10px 14px;
+
+      &.course {
+        top: -7px;
+      }
+      &:before, &:after {
+        display: block;
+        content: " ";
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 27px;
+        left: -14px;
+        border-top: 7px solid rgba(0, 0, 0, 0.5);
+        border-right: 7px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 7px solid transparent;
+        border-left: 7px solid transparent;
+      }
+      &:after {
+        top: 13px;
+        border-top: 7px solid transparent;
+        border-right: 7px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 7px solid rgba(0, 0, 0, 0.5);
+        border-left: 7px solid transparent;
+      }
+    }
+  }
   label {
     @include inline-block;
     text-align: right;
@@ -373,8 +425,14 @@ form {
     padding: 15px;
     cursor: pointer;
 
+    &.inline-block {
+      @include inline-block;
+    }
     &:hover {
       background: darken($color-leaf-green, 10%);
     }
+  }
+  .form-actions {
+    text-align: center;
   }
 }

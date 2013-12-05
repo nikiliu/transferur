@@ -22,7 +22,7 @@ class PendingRequest < ActiveRecord::Base
   validates :dual_enrollment, inclusion: { in: [true, false] }
 
   # Validate UR course
-  validates :ur_course_id, presence: true
+  validates :ur_course_id, presence: true, numericality: { greater_than: 0, message: "not selected" }
 
   # Returns School based on transfer_school_id
   def transfer_school

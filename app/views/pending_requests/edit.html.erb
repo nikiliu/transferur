@@ -4,6 +4,20 @@
 </div><!-- .breadcrumbs -->
 
 <h2>Review Pending Request</h2>
+<% if !@prev_request.nil? %>
+  <div class="flash pending mini">This request has not been evaluated in 5 years.</div>
+<% end %>
+<% if !@prev_requests.nil? %>
+  <div class="flash pending mini">
+    In the past, this course has been successfully approved for transfer for the following
+    UR courses:
+    <ul>
+      <% @prev_requests.each do |request| %>
+        <li><%= request.ur_course.name %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <ul class="data-list">
   <li>
     <span class="key">Requester name:</span>
@@ -59,11 +73,19 @@
 <%= form_tag pending_request_path(@request), method: :patch do %>
   <div>
     <%= label_tag :approved %>
-    <%= check_box_tag :approved %>
+    <% if @prev_request %>
+      <%= check_box_tag :approved, "1", @prev_request.approved %>
+    <% else %>
+      <%= check_box_tag :approved %>
+    <% end %>
   </div>
   <div>
     <%= label_tag :reasons %>
-    <%= text_field_tag :reasons %>
+    <% if @prev_request %>
+      <%= text_field_tag :reasons, @prev_request.reasons %>
+    <% else %>
+      <%= text_field_tag :reasons %>
+    <% end %>
   </div>
   <%= submit_tag "Submit", class: "pending-submit" %>
 <% end %>

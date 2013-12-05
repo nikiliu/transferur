@@ -13,6 +13,17 @@ update_transfer_courses = (school_id) ->
     dataType: "html"
     success:  (data) -> $("#pending_request_transfer_course_id").html(data)
 
+# Clear form button
+#------------------------------------------------------------------------
+$(".clear-form").click (e) ->
+  e.preventDefault()
+  $("input:text").val("")
+  $("#pending_request_requester_email").val("")
+  $("#pending_request_transfer_course_url").val("")
+  $("input:checkbox").prop("checked", false).change()
+  $("select").val("-1").change()
+  $("input:radio").each () -> $(this).click() if $(this).val() == "0"
+
 # Fires ajax function when a transfer school is selected
 #------------------------------------------------------------------------
 $("#pending_request_transfer_school_id").change(() ->
